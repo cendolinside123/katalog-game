@@ -9,8 +9,6 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    //private var currentContainerHeight: CGFloat = CGFloat(0)
-    
     private let tabBar = CustomTabBar()
     
     private let titleLabel = UILabel()
@@ -41,9 +39,9 @@ class HomeViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flow)
         collectionView.showsHorizontalScrollIndicator = false
-        //collectionView.showsVerticalScrollIndicator = false
-        //collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .blue
+        // collectionView.showsVerticalScrollIndicator = false
+        // collectionView.isScrollEnabled = false
+        collectionView.backgroundColor = .white
         
         return collectionView
     }()
@@ -62,7 +60,7 @@ class HomeViewController: UIViewController {
     
     private func addLayouts() {
         addTabBar()
-        //addScollView()
+        addScollView()
         addContainerView()
         addTitleLabel()
         addCollectionView()
@@ -76,18 +74,26 @@ class HomeViewController: UIViewController {
         var constraints = [NSLayoutConstraint]()
         
         tabBar.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        let hScrollView = "H:|-5-[containerView]-5-|"
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        let hScrollView = "H:|-5-[scrollView]-5-|"
         let hTabBar = "H:|-0-[tabBar]-0-|"
-        let vTabBarScrollView = "V:|-0-[tabBar]-0-[containerView]-0-|"
+        let vTabBarScrollView = "V:|-0-[tabBar]-0-[scrollView]-0-|"
         
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hScrollView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vTabBarScrollView, options: .alignAllLeft, metrics: metrix, views: views)
         constraints += [NSLayoutConstraint(item: tabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
-        //constraints += [NSLayoutConstraint(item: scrollView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)]
+        // constraints += [NSLayoutConstraint(item: scrollView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)]
         
         
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        let hContainerView = "H:|-0-[containerView]-0-|"
+        let vContainerView = "V:|-0-[containerView]-0-|"
+
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hContainerView, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: vContainerView, options: .alignAllLeft, metrics: metrix, views: views)
+        constraints += [NSLayoutConstraint(item: containerView, attribute: .width, relatedBy: .equal, toItem: scrollView, attribute: .width, multiplier: 1, constant: 0)]
+        constraints += [NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: scrollView, attribute: .height, multiplier: 1, constant: 0)]
         
         homeStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -96,17 +102,20 @@ class HomeViewController: UIViewController {
         
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hStackView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vStackView, options: .alignAllLeft, metrics: metrix, views: views)
+//        constraints += [NSLayoutConstraint(item: homeStackView, attribute: .height, relatedBy: .equal, toItem: containerView, attribute: .height, multiplier: 1, constant: 0)]
         
         
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         constraints += [NSLayoutConstraint(item: titleLabel, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
         
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
 //        let defaultValue = NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: CGFloat(Double(((Int(view.bounds.width) / 2) + 50)) * 5))
 //        defaultValue.identifier = "collectionViewHeigh"
 //        constraints += [defaultValue]
 //
+//        constraints += [NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: CGFloat(Double(((Int(view.bounds.width) / 2) + 50)) * 5))]
+        
         NSLayoutConstraint.activate(constraints)
         
     }
@@ -124,7 +133,7 @@ class HomeViewController: UIViewController {
     }
     
     private func addContainerView() {
-        view.addSubview(containerView)
+        scrollView.addSubview(containerView)
         containerView.backgroundColor = .white
     }
     
