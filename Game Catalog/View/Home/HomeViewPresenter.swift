@@ -56,7 +56,6 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                 DispatchQueue.main.async {
                     let oldPage = superSelf.listGame.count
                     superSelf.listGame += listOfGame
-                    //superSelf.view?.getCollectionView().reloadData()
                     
                     if listOfGame.count != 0 {
 //                        if superSelf.page != 1 {

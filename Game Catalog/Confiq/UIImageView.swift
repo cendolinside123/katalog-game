@@ -20,11 +20,7 @@ extension UIImageView {
         
         let imageResource = ImageResource(downloadURL: getURL, cacheKey: url)
         
-        let task = KingfisherManager.shared.retrieveImage(with: imageResource, options: [
-            .processor(DownsamplingImageProcessor(size: self.frame.size)),
-            .scaleFactor(UIScreen.main.scale),
-            .cacheOriginalImage
-        ]) { result in
+        let task = KingfisherManager.shared.retrieveImage(with: imageResource, options: [ .processor(DownsamplingImageProcessor(size: self.frame.size)), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage ]) { result in
             switch result {
             case .success:
                 print("cache success : \(url)")
@@ -32,13 +28,8 @@ extension UIImageView {
                 print("cache failed : \(error.localizedDescription) url : \(url)")
             }
         }
-        
         // start
-        ImageClassManager.sharedInstance.initialize().retrieveImage(forKey:"\(url)", options: [
-            .transition(.fade(10.0)),
-            .loadDiskFileSynchronously,
-            .forceTransition
-        ]) { [weak self] result in
+        ImageClassManager.sharedInstance.initialize().retrieveImage(forKey: "\(url)", options: [ .transition(.fade(10.0)), .loadDiskFileSynchronously, .forceTransition ]) { [weak self] result in
             switch result {
             case .success(let value):
                 DispatchQueue.main.async {
@@ -52,7 +43,6 @@ extension UIImageView {
                         } else {
                             self?.image = #imageLiteral(resourceName: "game")
                         }
-                        
                     } else {
                         print("cache local type \(value.cacheType) url: \(url)")
                         self?.image = #imageLiteral(resourceName: "game")
@@ -73,7 +63,6 @@ extension UIImageView {
                 }
             }
         // end
-        
     }
 }
 
@@ -89,7 +78,7 @@ class ImageClassManager {
             return checkInitialize
         } else {
             let setupCache = ImageCache.default
-            //setupCache.memoryStorage.config.countLimit = 1000 * 1024 * 1024
+            // setupCache.memoryStorage.config.countLimit = 1000 * 1024 * 1024
             setupCache.memoryStorage.config.totalCostLimit = 1
             setupCache.diskStorage.config.expiration = .days(3)
 //            setupCache.calculateDiskStorageSize(completion: {result in

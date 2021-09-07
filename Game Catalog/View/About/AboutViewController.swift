@@ -14,7 +14,7 @@ class AboutViewController: UIViewController {
     private let nameLabel = UILabel()
     private let emailLabel = UILabel()
     private let gitHubLabel = UILabel()
-    private let labelStackView:UIStackView = {
+    private let labelStackView: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .fill
         stack.axis = .vertical
@@ -62,14 +62,14 @@ class AboutViewController: UIViewController {
     }
     
     private func addConstraints() {
-        let views = ["navBar":navBar,"imagePP":imagePP,"nameLabel":nameLabel,"emailLabel":emailLabel,"gitHubLabel":gitHubLabel,"labelStackView":labelStackView]
+        let views = ["navBar": navBar, "imagePP": imagePP, "nameLabel": nameLabel, "emailLabel": emailLabel, "gitHubLabel": gitHubLabel, "labelStackView": labelStackView]
         
-        let metrix:[String:Any] = [:]
+        let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
         
         
-        //MARK: navBar , imagePP and labelStackView constraints
+        // MARK: navBar , imagePP and labelStackView constraints
         
         navBar.translatesAutoresizingMaskIntoConstraints = false
         imagePP.translatesAutoresizingMaskIntoConstraints = false
@@ -89,12 +89,12 @@ class AboutViewController: UIViewController {
         constraints += [NSLayoutConstraint(item: imagePP, attribute: .height, relatedBy: .equal, toItem: imagePP, attribute: .width, multiplier: 1, constant: 0)]
         
         
-        //MARK: nameLabel , emailLabel , and gitHubLabel
+        // MARK: nameLabel , emailLabel , and gitHubLabel
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         gitHubLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        //constraints += [NSLayoutConstraint(item: nameLabel, attribute: .height, relatedBy: .equal, toItem: emailLabel, attribute: .height, multiplier: 3/9, constant: 0)]
+        // constraints += [NSLayoutConstraint(item: nameLabel, attribute: .height, relatedBy: .equal, toItem: emailLabel, attribute: .height, multiplier: 3/9, constant: 0)]
         constraints += [NSLayoutConstraint(item: emailLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20)]
         
         constraints += [NSLayoutConstraint(item: emailLabel, attribute: .height, relatedBy: .equal, toItem: gitHubLabel, attribute: .height, multiplier: 1, constant: 0)]

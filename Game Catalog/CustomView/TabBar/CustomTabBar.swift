@@ -62,7 +62,7 @@ class CustomTabBar: UIView {
         
         let views = ["borderView": borderView, "contentView": contentView, "leftButton": leftButton, "rightButton": rightButton]
         
-        let metrix: [String:Any] = [:]
+        let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
         
@@ -90,7 +90,7 @@ class CustomTabBar: UIView {
         
         constraints += [NSLayoutConstraint(item: leftButton, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 5)]
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vLeftButton, options: .alignAllLeading, metrics: metrix, views: views)
-        //constraints += [NSLayoutConstraint(item: leftButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 10)]
+        // constraints += [NSLayoutConstraint(item: leftButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 10)]
         
         rightButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -98,7 +98,7 @@ class CustomTabBar: UIView {
         
         constraints += [NSLayoutConstraint(item: contentView, attribute: .trailing, relatedBy: .equal, toItem: rightButton, attribute: .trailing, multiplier: 1, constant: 5)]
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vRightButton, options: .alignAllTrailing, metrics: metrix, views: views)
-        //constraints += [NSLayoutConstraint(item: rightButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 10)]
+        // constraints += [NSLayoutConstraint(item: rightButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 10)]
         
         NSLayoutConstraint.activate(constraints)
         
