@@ -40,7 +40,7 @@ class HomeViewPresenter: NSObject {
         self.view?.getCollectionView().register(UICollectionViewCell.self, forCellWithReuseIdentifier: "defaultCell")
         
 //        self.view?.getScrollView().delegate = self
-        self.view?.showLoadingNotif()
+        self.view?.showLoadingNotifNoAnimation()
         loadData()
     }
     
@@ -64,22 +64,22 @@ extension HomeViewPresenter: HomeViewPresenterRule {
 //                            superSelf.view?.updateContainerHeighConstraint()
 //                        }
                         
-                        if superSelf.page == 1 {
-                            superSelf.view?.getCollectionView().reloadData()
-                        } else {
-                            
-                            var indexPath = [IndexPath]()
-                            
-                            for index in oldPage ... superSelf.listGame.count - 1 {
-                                print("i: \(index)")
-                                indexPath.append(IndexPath(item: index, section: 0))
-                            }
-                            
-                            superSelf.view?.getCollectionView().insertItems(at: indexPath)
-                            superSelf.doUpdate = true
+                        var indexPath = [IndexPath]()
+                        
+                        for index in oldPage ... superSelf.listGame.count - 1 {
+                            print("i: \(index)")
+                            indexPath.append(IndexPath(item: index, section: 0))
                         }
                         
-                        //superSelf.view?.updateContainerHeighConstraint()
+                        superSelf.view?.getCollectionView().insertItems(at: indexPath)
+                        
+                        if superSelf.page != 1 {
+                            superSelf.doUpdate = true
+                        } else {
+                            
+                        }
+                        
+                        // superSelf.view?.updateContainerHeighConstraint()
                         
                         superSelf.page += 1
                         superSelf.view?.hideLoadingNofif()
@@ -138,27 +138,10 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeViewPresenter: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let scrollViewHeight = scrollView.frame.size.height
-//        let scrollContentSizeHeight = scrollView.contentSize.height
-//        let scrollOffset = scrollView.contentOffset.y
-//
-//        if scrollOffset + scrollViewHeight == scrollContentSizeHeight {
-//            print("on bottom scrollViewHeight: \(scrollViewHeight) , scrollContentSizeHeight: \(scrollContentSizeHeight) , scrollOffset: \(scrollOffset)")
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-//                self?.loadData()
-//            })
-//        }
-        //doUpdate = true
-        
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if ((scrollView as? UICollectionView) != nil) {
+        if (scrollView as? UICollectionView) != nil {
             let scrollViewHeight = scrollView.frame.size.height
             let scrollContentSizeHeight = scrollView.contentSize.height
             let scrollOffset = scrollView.contentOffset.y

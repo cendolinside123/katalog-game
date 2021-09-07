@@ -219,6 +219,24 @@ extension HomeViewController {
         return scrollView
     }
     
+    func showLoadingNotifNoAnimation() {
+        var constraints = view.constraints
+        
+        guard let bottomConstraint = constraints.firstIndex(where: { (constraint) -> Bool in
+            constraint.identifier == "loadingBottomConstraint"
+        }) else {
+            return
+        }
+        
+        NSLayoutConstraint.deactivate(constraints)
+        constraints[bottomConstraint] = NSLayoutConstraint(item: loadingNotif, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        constraints[bottomConstraint].identifier = "loadingBottomConstraint"
+        NSLayoutConstraint.activate(constraints)
+        loadingNotif.alpha = 1
+        loadingText.alpha = 1
+        view.layoutIfNeeded()
+    }
+    
     func showLoadingNotif() {
         var constraints = view.constraints
         
