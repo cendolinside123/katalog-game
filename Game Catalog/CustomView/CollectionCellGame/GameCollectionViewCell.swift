@@ -65,7 +65,7 @@ class GameCollectionViewCell: UICollectionViewCell {
     
     private func addConstraints() {
         let views = ["borderView": borderView, "contentStackView": contentStackView, "containerView": containerView, "gameImage": gameImage, "gameTitle": gameTitle, "ratingBox": ratingBox, "ratingStackView": ratingStackView]
-        let metrix: [String:Any] = [:]
+        let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
         
