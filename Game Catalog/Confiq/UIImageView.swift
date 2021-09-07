@@ -33,7 +33,7 @@ extension UIImageView {
             }
         }
         
-        //start
+        // start
         ImageClassManager.sharedInstance.initialize().retrieveImage(forKey:"\(url)", options: [
             .transition(.fade(10.0)),
             .loadDiskFileSynchronously,
@@ -56,7 +56,7 @@ extension UIImageView {
                     } else {
                         print("cache local type \(value.cacheType) url: \(url)")
                         self?.image = #imageLiteral(resourceName: "game")
-                        self?.setImage(url: url, times: times - 1)
+                        // self?.setImage(url: url, times: times - 1)
                     }
                 }
             case .failure(let error):
@@ -72,7 +72,7 @@ extension UIImageView {
                 }
                 }
             }
-        //end
+        // end
         
     }
 }
