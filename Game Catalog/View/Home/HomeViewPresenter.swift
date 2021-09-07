@@ -14,7 +14,7 @@ class HomeViewPresenter: NSObject {
     var listGame = [Game]()
     var gameDataSource: GameDataSourceProtocol?
     var page: Int = 1
-    var doUpdate: Bool = false
+    var doUpdate: Bool = true
     
     override init() {
         super.init()
@@ -72,6 +72,7 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                         //superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
                         
                         superSelf.page += 1
+                        superSelf.doUpdate = true
                     }
                     
                     
@@ -79,7 +80,7 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                 }
                 
             }, error: {
-                
+                superSelf.doUpdate = true
             })
         }
     }
@@ -138,25 +139,29 @@ extension HomeViewPresenter: UIScrollViewDelegate {
 //                self?.loadData()
 //            })
 //        }
-        doUpdate = true
+        //doUpdate = true
         
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        print("scrollViewDidEndDragging")
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("scrollViewDidEndDecelerating")
+        
         let scrollViewHeight = scrollView.frame.size.height
         let scrollContentSizeHeight = scrollView.contentSize.height
         let scrollOffset = scrollView.contentOffset.y
         
         if (scrollOffset + scrollViewHeight == scrollContentSizeHeight) && doUpdate == true {
+            
             doUpdate = false
+            
+            print("scrollViewDidEndDecelerating true")
             DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
                 self?.loadData()
             })
+        } else {
+            print("scrollViewDidEndDecelerating false")
         }
     }
 }
