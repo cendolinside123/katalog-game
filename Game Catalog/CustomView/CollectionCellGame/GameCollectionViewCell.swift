@@ -141,18 +141,18 @@ class GameCollectionViewCell: UICollectionViewCell {
 extension GameCollectionViewCell {
     func setupData(item: Game) {
         gameTitle.text = item.name
-//        gameImage.setImage(urlGame: item.backgroundImage, times: 3)
+        gameImage.setImage(url: item.backgroundImage, times: 3)
         
-        do {
-            guard let url = URL(string: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg") else {
-                return
-            }
-            let data = try Data(contentsOf: url)
-            self.gameImage.image = UIImage(data: data)
-        }
-        catch{
-            print(error)
-        }
+//        do {
+//            guard let url = URL(string: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg") else {
+//                return
+//            }
+//            let data = try Data(contentsOf: url)
+//            self.gameImage.image = UIImage(data: data)
+//        }
+//        catch{
+//            print(error)
+//        }
         
     }
     
