@@ -40,7 +40,7 @@ class HomeViewPresenter: NSObject {
         self.view?.getCollectionView().register(UICollectionViewCell.self, forCellWithReuseIdentifier: "defaultCell")
         
 //        self.view?.getScrollView().delegate = self
-        
+        self.view?.showLoadingNotif()
         loadData()
     }
     
@@ -82,7 +82,7 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                         //superSelf.view?.updateContainerHeighConstraint()
                         
                         superSelf.page += 1
-                        
+                        superSelf.view?.hideLoadingNofif()
                     }
                     
                     
@@ -166,6 +166,8 @@ extension HomeViewPresenter: UIScrollViewDelegate {
             if (scrollOffset + scrollViewHeight == scrollContentSizeHeight) && doUpdate == true {
                 
                 doUpdate = false
+                
+                self.view?.showLoadingNotif()
                 
                 print("scrollViewDidEndDecelerating true")
                 DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in

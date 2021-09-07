@@ -39,12 +39,15 @@ class HomeViewController: UIViewController {
         
         let collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flow)
         collectionView.showsHorizontalScrollIndicator = false
-        //collectionView.showsVerticalScrollIndicator = false
-        //collectionView.isScrollEnabled = false
+//        collectionView.showsVerticalScrollIndicator = false
+//        collectionView.isScrollEnabled = false
         collectionView.backgroundColor = .white
         
         return collectionView
     }()
+    
+    private let loadingNotif = UIView()
+    private let loadingText = UITextView()
     
     private var presenter: HomeViewPresenterRule?
 
@@ -65,10 +68,11 @@ class HomeViewController: UIViewController {
         addTitleLabel()
         addCollectionView()
         addStackView()
+        addLoadingNotif()
     }
     
     private func addConstraints() {
-        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel]
+        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText]
         let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
@@ -83,7 +87,7 @@ class HomeViewController: UIViewController {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vTabBarScrollView, options: .alignAllLeft, metrics: metrix, views: views)
         constraints += [NSLayoutConstraint(item: tabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
-        //constraints += [NSLayoutConstraint(item: scrollView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)]
+        // constraints += [NSLayoutConstraint(item: scrollView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)]
         
         
         
@@ -114,13 +118,35 @@ class HomeViewController: UIViewController {
 //        defaultValue.identifier = "collectionViewHeigh"
 //        constraints += [defaultValue]
 //
+        
+        loadingNotif.translatesAutoresizingMaskIntoConstraints = false
+        
+        let hLoadingNotif = "H:|-0-[loadingNotif]-0-|"
+        
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hLoadingNotif, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += [NSLayoutConstraint(item: loadingNotif, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35)]
+        let loadingBottomConstraint = NSLayoutConstraint(item: loadingNotif, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 70)
+        loadingBottomConstraint.identifier = "loadingBottomConstraint"
+        constraints += [loadingBottomConstraint]
+        
+        
+        loadingText.translatesAutoresizingMaskIntoConstraints = false
+        
+        let hLoadingText = "H:|-[loadingText]-|"
+        constraints += [NSLayoutConstraint(item: loadingText, attribute: .centerX, relatedBy: .equal, toItem: loadingNotif, attribute: .centerX, multiplier: 1, constant: 0)]
+        constraints += [NSLayoutConstraint(item: loadingText, attribute: .centerY, relatedBy: .equal, toItem: loadingNotif, attribute: .centerY, multiplier: 1, constant: 0)]
+        constraints += [NSLayoutConstraint(item: loadingText, attribute: .height, relatedBy: .equal, toItem: loadingNotif, attribute: .height, multiplier: 1, constant: 0)]
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hLoadingText, options: .alignAllCenterY, metrics: metrix, views: views)
+        
+        
+        
         NSLayoutConstraint.activate(constraints)
         
     }
     
     private func addTabBar() {
         view.addSubview(tabBar)
-        //tabBar.backgroundColor = .blue
+        // tabBar.backgroundColor = .blue
     }
     
     private func addScollView() {
@@ -152,6 +178,20 @@ class HomeViewController: UIViewController {
         homeStackView.addArrangedSubview(titleLabel)
         homeStackView.addArrangedSubview(collectionView)
     }
+    
+    private func addLoadingNotif() {
+        view.addSubview(loadingNotif)
+        loadingNotif.addSubview(loadingText)
+        loadingNotif.backgroundColor = .gray
+        loadingNotif.alpha = 0
+        
+        loadingText.text = "Now Loading ...."
+        loadingText.font = UIFont.boldSystemFont(ofSize: 15)
+        loadingText.textColor = .black
+        loadingText.textAlignment = .center
+        loadingText.backgroundColor = .none
+        loadingText.alpha = 0
+    }
 
     /*
     // MARK: - Navigation
@@ -177,6 +217,57 @@ extension HomeViewController {
     
     func getScrollView() -> UIScrollView {
         return scrollView
+    }
+    
+    func showLoadingNotif() {
+        var constraints = view.constraints
+        
+        guard let bottomConstraint = constraints.firstIndex(where: { (constraint) -> Bool in
+            constraint.identifier == "loadingBottomConstraint"
+        }) else {
+            return
+        }
+        
+        NSLayoutConstraint.deactivate(constraints)
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let superSelf = self else {
+                return
+            }
+            
+            constraints[bottomConstraint] = NSLayoutConstraint(item: superSelf.loadingNotif, attribute: .bottom, relatedBy: .equal, toItem: superSelf.view, attribute: .bottom, multiplier: 1, constant: 0)
+            constraints[bottomConstraint].identifier = "loadingBottomConstraint"
+            NSLayoutConstraint.activate(constraints)
+            superSelf.loadingNotif.alpha = 1
+            superSelf.loadingText.alpha = 1
+            superSelf.view.layoutIfNeeded()
+        })
+        
+        
+    }
+    
+    func hideLoadingNofif() {
+        var constraints = view.constraints
+        
+        guard let bottomConstraint = constraints.firstIndex(where: { (constraint) -> Bool in
+            constraint.identifier == "loadingBottomConstraint"
+        }) else {
+            return
+        }
+        
+        NSLayoutConstraint.deactivate(constraints)
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let superSelf = self else {
+                return
+            }
+            
+            constraints[bottomConstraint] = NSLayoutConstraint(item: superSelf.loadingNotif, attribute: .bottom, relatedBy: .equal, toItem: superSelf.view, attribute: .bottom, multiplier: 1, constant: 70)
+            constraints[bottomConstraint].identifier = "loadingBottomConstraint"
+            NSLayoutConstraint.activate(constraints)
+            superSelf.loadingNotif.alpha = 0
+            superSelf.loadingText.alpha = 0
+            superSelf.view.layoutIfNeeded()
+        })
+        
     }
     
     func updateContainerHeighConstraint() {
