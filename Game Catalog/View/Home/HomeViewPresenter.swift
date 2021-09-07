@@ -1,0 +1,146 @@
+//
+//  HomeViewPresenter.swift
+//  Game Catalog
+//
+//  Created by Mac on 06/09/21.
+//
+
+import Foundation
+import UIKit
+
+class HomeViewPresenter: NSObject {
+    
+    var view: HomeViewController?
+    var listGame = [Game]()
+    var gameDataSource: GameDataSourceProtocol?
+    var page: Int = 1
+    var doUpdate: Bool = false
+    
+    override init() {
+        super.init()
+        
+    }
+    
+    convenience init(view: HomeViewController) {
+        self.init()
+        self.view = view
+        gameDataSource = GameDataSourceImp()
+        self.view?.getCollectionView().delegate = self
+        self.view?.getCollectionView().dataSource = self
+        self.view?.getCollectionView().register(GameCollectionViewCell.self, forCellWithReuseIdentifier: "gameCell")
+        self.view?.getCollectionView().register(UICollectionViewCell.self, forCellWithReuseIdentifier: "defaultCell")
+        
+        self.view?.getScrollView().delegate = self
+        
+        loadData()
+    }
+    
+}
+
+extension HomeViewPresenter: HomeViewPresenterRule {
+    private func loadData() {
+        DispatchQueue.main.async { [weak self] in
+            guard let superSelf = self else {
+                return
+            }
+            superSelf.gameDataSource?.getListGame(page: superSelf.page, result: { listOfGame in
+                DispatchQueue.main.async {
+                    superSelf.listGame += listOfGame
+                    superSelf.view?.getCollectionView().reloadData()
+                    
+                    if listOfGame.count != 0 {
+//                        if superSelf.page != 1 {
+//                            //superSelf.view?.getCollectionView().invalidateIntrinsicContentSize()
+//                            superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
+//                        }
+                        superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
+                        
+                        superSelf.page += 1
+                    }
+                    
+                    
+                    
+                }
+                
+            }, error: {
+                
+            })
+        }
+    }
+}
+
+extension HomeViewPresenter: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return listGame.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "gameCell", for: indexPath) as? GameCollectionViewCell else {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "defaultCell", for: indexPath)
+        }
+        
+        let item = listGame[indexPath.row]
+        cell.setupData(item: item)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "gameCell", for: indexPath) as? GameCollectionViewCell  else {
+            return
+        }
+        
+        cell.returnGameImage().kf.cancelDownloadTask()
+        
+    }
+    
+}
+
+extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let numberOfItemPerRow = 2
+        let spacing = 10
+        
+        let totalSpacing = (2 * 10) + ((numberOfItemPerRow - 1) * spacing)
+        
+        let width = (Int(collectionView.bounds.width) - totalSpacing)/numberOfItemPerRow
+        return CGSize(width: width, height: width + 50)
+    }
+}
+
+extension HomeViewPresenter: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let scrollViewHeight = scrollView.frame.size.height
+//        let scrollContentSizeHeight = scrollView.contentSize.height
+//        let scrollOffset = scrollView.contentOffset.y
+//
+//        if scrollOffset + scrollViewHeight == scrollContentSizeHeight {
+//            print("on bottom scrollViewHeight: \(scrollViewHeight) , scrollContentSizeHeight: \(scrollContentSizeHeight) , scrollOffset: \(scrollOffset)")
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+//                self?.loadData()
+//            })
+//        }
+        doUpdate = true
+        
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("berhenti")
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("scrollViewDidEndDecelerating")
+        let scrollViewHeight = scrollView.frame.size.height
+        let scrollContentSizeHeight = scrollView.contentSize.height
+        let scrollOffset = scrollView.contentOffset.y
+        
+        if (scrollOffset + scrollViewHeight == scrollContentSizeHeight) && doUpdate == true {
+            doUpdate = false
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+                self?.loadData()
+            })
+        }
+    }
+}
