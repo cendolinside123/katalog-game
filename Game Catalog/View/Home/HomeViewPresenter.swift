@@ -45,15 +45,31 @@ extension HomeViewPresenter: HomeViewPresenterRule {
             }
             superSelf.gameDataSource?.getListGame(page: superSelf.page, result: { listOfGame in
                 DispatchQueue.main.async {
+                    let oldPage = superSelf.listGame.count
                     superSelf.listGame += listOfGame
-                    superSelf.view?.getCollectionView().reloadData()
+                    //superSelf.view?.getCollectionView().reloadData()
                     
                     if listOfGame.count != 0 {
 //                        if superSelf.page != 1 {
 //                            //superSelf.view?.getCollectionView().invalidateIntrinsicContentSize()
 //                            superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
 //                        }
-                        superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
+                        
+                        if superSelf.page == 1 {
+                            superSelf.view?.getCollectionView().reloadData()
+                        } else {
+                            
+                            var indexPath = [IndexPath]()
+                            
+                            for index in oldPage ... superSelf.listGame.count - 1 {
+                                print("i: \(index)")
+                                indexPath.append(IndexPath(item: index, section: 0))
+                            }
+                            
+                            superSelf.view?.getCollectionView().insertItems(at: indexPath)
+                        }
+                        
+                        //superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
                         
                         superSelf.page += 1
                     }
@@ -127,7 +143,7 @@ extension HomeViewPresenter: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        print("berhenti")
+        print("scrollViewDidEndDragging")
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
