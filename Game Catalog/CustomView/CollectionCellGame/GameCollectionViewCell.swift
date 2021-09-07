@@ -93,7 +93,7 @@ class GameCollectionViewCell: UICollectionViewCell {
         gameImage.translatesAutoresizingMaskIntoConstraints = false
         gameTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        constraints += [NSLayoutConstraint(item: gameTitle, attribute: .height, relatedBy: .equal, toItem: gameImage, attribute: .height, multiplier: 2/9, constant: 0)]
+        constraints += [NSLayoutConstraint(item: gameTitle, attribute: .height, relatedBy: .equal, toItem: gameImage, attribute: .height, multiplier: 3/9, constant: 0)]
         
         NSLayoutConstraint.activate(constraints)
         
@@ -122,6 +122,8 @@ class GameCollectionViewCell: UICollectionViewCell {
         gameTitle.textAlignment = .center
         gameTitle.numberOfLines = 0
         gameTitle.textColor = .black
+        gameTitle.lineBreakMode = .byWordWrapping
+        gameTitle.sizeToFit()
     }
     
     private func addRatingBox() {
@@ -141,7 +143,7 @@ class GameCollectionViewCell: UICollectionViewCell {
 extension GameCollectionViewCell {
     func setupData(item: Game) {
         gameTitle.text = item.name
-        gameImage.setImage(url: item.backgroundImage, times: 3)
+        gameImage.setImage(url: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg", times: 3)
         
     }
     
