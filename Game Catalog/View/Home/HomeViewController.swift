@@ -9,8 +9,6 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    //private var currentContainerHeight: CGFloat = CGFloat(0)
-    
     private let tabBar = CustomTabBar()
     
     private let titleLabel = UILabel()
@@ -43,7 +41,7 @@ class HomeViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         //collectionView.showsVerticalScrollIndicator = false
         //collectionView.isScrollEnabled = false
-        collectionView.backgroundColor = .blue
+        collectionView.backgroundColor = .white
         
         return collectionView
     }()
@@ -62,7 +60,7 @@ class HomeViewController: UIViewController {
     
     private func addLayouts() {
         addTabBar()
-        //addScollView()
+        addScollView()
         addContainerView()
         addTitleLabel()
         addCollectionView()
@@ -76,10 +74,10 @@ class HomeViewController: UIViewController {
         var constraints = [NSLayoutConstraint]()
         
         tabBar.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        let hScrollView = "H:|-5-[containerView]-5-|"
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        let hScrollView = "H:|-5-[scrollView]-5-|"
         let hTabBar = "H:|-0-[tabBar]-0-|"
-        let vTabBarScrollView = "V:|-0-[tabBar]-0-[containerView]-0-|"
+        let vTabBarScrollView = "V:|-0-[tabBar]-0-[scrollView]-0-|"
         
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hScrollView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
@@ -97,6 +95,15 @@ class HomeViewController: UIViewController {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hStackView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vStackView, options: .alignAllLeft, metrics: metrix, views: views)
         
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        let hContainerView = "H:|-0-[containerView]-0-|"
+        let vContainerView = "V:|-0-[containerView]-0-|"
+
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hContainerView, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: vContainerView, options: .alignAllLeft, metrics: metrix, views: views)
+        constraints += [NSLayoutConstraint(item: containerView, attribute: .width, relatedBy: .equal, toItem: scrollView, attribute: .width, multiplier: 1, constant: 0)]
+        constraints += [NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: scrollView, attribute: .height, multiplier: 1, constant: 0)]
+
         
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +131,7 @@ class HomeViewController: UIViewController {
     }
     
     private func addContainerView() {
-        view.addSubview(containerView)
+        scrollView.addSubview(containerView)
         containerView.backgroundColor = .white
     }
     
@@ -172,7 +179,7 @@ extension HomeViewController {
         return scrollView
     }
     
-    func updateContainerHeighConstraint(page: Int) {
+    func updateContainerHeighConstraint() {
         var constraints = collectionView.constraints
         
         
@@ -185,13 +192,6 @@ extension HomeViewController {
         print("Thread.isMainThread: \(Thread.isMainThread)")
         
         NSLayoutConstraint.deactivate(constraints)
-//        let addValue = CGFloat(((Int(view.bounds.width) / 2) + (50 + (10 * (page * -1)))) * 5)
-//        print("addValue: \(CGFloat(((Int(view.bounds.width) / 2) + (50 + (10 * (page * -1)))) * 5))")
-//        print("currentContainerHeight: \(currentContainerHeight)")
-//
-//        currentContainerHeight += addValue
-//
-//        print("newConstraintValue: \(currentContainerHeight)")
 
         print("collectionView.contentSize.height: \(collectionView.contentSize.height)")
         

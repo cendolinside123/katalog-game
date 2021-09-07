@@ -14,7 +14,16 @@ class HomeViewPresenter: NSObject {
     var listGame = [Game]()
     var gameDataSource: GameDataSourceProtocol?
     var page: Int = 1
-    var doUpdate: Bool = true
+    var doUpdate: Bool = true {
+        didSet {
+            if oldValue == true && doUpdate == true {
+                doUpdate = false
+                print("scroll task something wrong, set it to false")
+            } else {
+                print("scroll task vertified")
+            }
+        }
+    }
     
     override init() {
         super.init()
@@ -30,7 +39,7 @@ class HomeViewPresenter: NSObject {
         self.view?.getCollectionView().register(GameCollectionViewCell.self, forCellWithReuseIdentifier: "gameCell")
         self.view?.getCollectionView().register(UICollectionViewCell.self, forCellWithReuseIdentifier: "defaultCell")
         
-        self.view?.getScrollView().delegate = self
+//        self.view?.getScrollView().delegate = self
         
         loadData()
     }
@@ -52,7 +61,7 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                     if listOfGame.count != 0 {
 //                        if superSelf.page != 1 {
 //                            //superSelf.view?.getCollectionView().invalidateIntrinsicContentSize()
-//                            superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
+//                            superSelf.view?.updateContainerHeighConstraint()
 //                        }
                         
                         if superSelf.page == 1 {
@@ -67,12 +76,13 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                             }
                             
                             superSelf.view?.getCollectionView().insertItems(at: indexPath)
+                            superSelf.doUpdate = true
                         }
                         
-                        //superSelf.view?.updateContainerHeighConstraint(page: superSelf.page)
+                        //superSelf.view?.updateContainerHeighConstraint()
                         
                         superSelf.page += 1
-                        superSelf.doUpdate = true
+                        
                     }
                     
                     
@@ -148,20 +158,23 @@ extension HomeViewPresenter: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let scrollViewHeight = scrollView.frame.size.height
-        let scrollContentSizeHeight = scrollView.contentSize.height
-        let scrollOffset = scrollView.contentOffset.y
-        
-        if (scrollOffset + scrollViewHeight == scrollContentSizeHeight) && doUpdate == true {
+        if ((scrollView as? UICollectionView) != nil) {
+            let scrollViewHeight = scrollView.frame.size.height
+            let scrollContentSizeHeight = scrollView.contentSize.height
+            let scrollOffset = scrollView.contentOffset.y
             
-            doUpdate = false
-            
-            print("scrollViewDidEndDecelerating true")
-            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-                self?.loadData()
-            })
-        } else {
-            print("scrollViewDidEndDecelerating false")
+            if (scrollOffset + scrollViewHeight == scrollContentSizeHeight) && doUpdate == true {
+                
+                doUpdate = false
+                
+                print("scrollViewDidEndDecelerating true")
+                DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+                    self?.loadData()
+                })
+            } else {
+                print("scrollViewDidEndDecelerating false")
+            }
         }
+        
     }
 }
