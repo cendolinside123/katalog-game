@@ -36,8 +36,8 @@ class AboutViewController: UIViewController {
 //        }
         navBar.isRightButtonHidden = true
         navBar.setLeftButtonText(text: "X")
-        navBar.leftButtonAction = {
-            
+        navBar.leftButtonAction = { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
         }
     }
     
