@@ -120,6 +120,7 @@ class CustomTabBar: UIView {
         rightButton.backgroundColor = .white
         setRightButtonText(text: "-")
         rightButton.setTitleColor(.black, for: .normal)
+        rightButton.addTarget(self, action: #selector(rightButtonTap), for: .touchDown)
     }
     
     private func addLeftButton() {
@@ -127,6 +128,7 @@ class CustomTabBar: UIView {
         leftButton.backgroundColor = .white
         setLeftButtonText(text: "-")
         leftButton.setTitleColor(.black, for: .normal)
+        leftButton.addTarget(self, action: #selector(leftButtonTap), for: .touchDown)
     }
     
     
@@ -138,4 +140,14 @@ class CustomTabBar: UIView {
         leftButton.setTitle(text, for: .normal)
     }
 
+}
+
+extension CustomTabBar {
+    @objc private func leftButtonTap() {
+        leftButtonAction?()
+    }
+    
+    @objc private func rightButtonTap() {
+        rightButtonAction?()
+    }
 }
