@@ -220,6 +220,10 @@ class HomeViewController: UIViewController {
         textAboutMe.textColor = .black
         textAboutMe.lineBreakMode = .byWordWrapping
         textAboutMe.sizeToFit()
+        
+        
+        floatingAbout.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragAboutMe(gesture:))))
+        floatingAbout.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAboutMe(tap:))))
     }
 
     /*
@@ -341,4 +345,45 @@ extension HomeViewController {
         self.view.layoutIfNeeded()
     }
     
+}
+
+extension HomeViewController {
+    @objc private func dragAboutMe(gesture: UIPanGestureRecognizer) {
+        let location = gesture.location(in: self.view)
+        let draggedView = gesture.view
+        draggedView?.center = location
+        
+        if gesture.state == .ended {
+            if self.floatingAbout.frame.midX >= self.view.layer.frame.width / 2 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.floatingAbout.center.x = self.view.layer.frame.width - 40
+                }, completion: nil)
+            } else {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.floatingAbout.center.x = 40
+                }, completion: nil)
+            }
+            
+            
+            if self.floatingAbout.frame.origin.y > 0 {
+                if self.floatingAbout.frame.maxY >= self.view.layer.frame.height {
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                        self.floatingAbout.frame.origin.y -= 40
+                    }, completion: nil)
+                } else {
+                    
+                }
+            } else {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+                    self.floatingAbout.frame.origin.y = 40
+                }, completion: nil)
+            }
+            
+        }
+    }
+    
+    @objc private func tapAboutMe(tap: UITapGestureRecognizer) {
+        let aboutMe = AboutViewController()
+        self.present(aboutMe, animated: true, completion: nil)
+    }
 }
