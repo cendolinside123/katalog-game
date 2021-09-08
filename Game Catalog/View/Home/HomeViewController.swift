@@ -49,6 +49,9 @@ class HomeViewController: UIViewController {
     private let loadingNotif = UIView()
     private let loadingText = UITextView()
     
+    private let floatingAbout = UIView()
+    private let textAboutMe = UILabel()
+    
     private var presenter: HomeViewPresenterRule?
 
     override func viewDidLoad() {
@@ -69,10 +72,11 @@ class HomeViewController: UIViewController {
         addCollectionView()
         addStackView()
         addLoadingNotif()
+        addFloatingAbout()
     }
     
     private func addConstraints() {
-        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText]
+        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText,"textAboutMe":textAboutMe]
         let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
@@ -139,6 +143,12 @@ class HomeViewController: UIViewController {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hLoadingText, options: .alignAllCenterY, metrics: metrix, views: views)
         
         
+        textAboutMe.translatesAutoresizingMaskIntoConstraints = false
+        
+        let hTextAboutMe = "H:|-0-[textAboutMe]-0-|"
+        let vTextAboutMe = "V:|-0-[textAboutMe]-0-|"
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hTextAboutMe, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: vTextAboutMe, options: .alignAllLeft, metrics: metrix, views: views)
         
         NSLayoutConstraint.activate(constraints)
         
@@ -191,6 +201,25 @@ class HomeViewController: UIViewController {
         loadingText.textAlignment = .center
         loadingText.backgroundColor = .none
         loadingText.alpha = 0
+    }
+    
+    private func addFloatingAbout() {
+        view.addSubview(floatingAbout)
+        floatingAbout.addSubview(textAboutMe)
+        
+        floatingAbout.backgroundColor = .red
+        
+        floatingAbout.frame.size.height = 50
+        floatingAbout.frame.size.width = 50
+        floatingAbout.frame.origin.x = (view.frame.width * 3) / 4
+        floatingAbout.frame.origin.y = (view.frame.height * 4) / 5
+        
+        textAboutMe.text = "About Me"
+        textAboutMe.textAlignment = .center
+        textAboutMe.numberOfLines = 0
+        textAboutMe.textColor = .black
+        textAboutMe.lineBreakMode = .byWordWrapping
+        textAboutMe.sizeToFit()
     }
 
     /*
