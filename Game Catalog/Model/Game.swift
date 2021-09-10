@@ -32,7 +32,7 @@ struct Game {
     let dominantColor: String
     let platforms: [Platforms]
     
-    init(id: Int ,slug: String ,name: String ,released: String ,tba: Bool ,backgroundImage: String ,rating: Double ,ratingTop: Double ,ratings: [Rating] ,ratingsCount: Double ,reviewsTextCount: Double ,added: Int ,addedByStatus: AddedStatus ,metacritic: Int ,playtime: Int ,suggestionsCount: Int ,updated: String ,usergame: String? ,reviewsCount: Double ,saturatedColor: String ,dominantColor: String ,platforms: [Platforms]) {
+    init(id: Int, slug: String, name: String, released: String, tba: Bool, backgroundImage: String, rating: Double, ratingTop: Double, ratings: [Rating], ratingsCount: Double, reviewsTextCount: Double, added: Int, addedByStatus: AddedStatus, metacritic: Int, playtime: Int, suggestionsCount: Int, updated: String, usergame: String?, reviewsCount: Double, saturatedColor: String, dominantColor: String, platforms: [Platforms]) {
         self.id = id
         self.slug = slug
         self.name = name
