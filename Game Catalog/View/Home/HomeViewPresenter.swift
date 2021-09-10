@@ -14,6 +14,7 @@ class HomeViewPresenter: NSObject {
     var listGame = [Game]()
     var gameDataSource: GameDataSourceProtocol?
     var page: Int = 1
+    var updateScroll = true
     var doUpdate: Bool = true {
         didSet {
             if oldValue == true && doUpdate == true {
@@ -58,10 +59,6 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                     superSelf.listGame += listOfGame
                     
                     if listOfGame.count != 0 {
-//                        if superSelf.page != 1 {
-//                            //superSelf.view?.getCollectionView().invalidateIntrinsicContentSize()
-//                            superSelf.view?.updateContainerHeighConstraint()
-//                        }
                         
                         var indexPath = [IndexPath]()
                         
@@ -77,15 +74,11 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                         } else {
                             
                         }
-                        
                         // superSelf.view?.updateContainerHeighConstraint()
                         
                         superSelf.page += 1
                         superSelf.view?.hideLoadingNofif()
                     }
-                    
-                    
-                    
                 }
                 
             }, error: {
@@ -143,6 +136,42 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeViewPresenter: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        print("scrollView.contentOffset.y: \(scrollView.contentOffset.y) , scrollView.frame.size.height: \(scrollView.frame.size.height), scrollView.contentSize.height: \(scrollView.contentSize.height)")
+        
+        let titleHeigh = self.view?.getTitle().frame.height ?? 0
+        view?.getCollectionView().layoutIfNeeded()
+        if self.updateScroll && scrollView.contentOffset.y != 0 {
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                self.view?.getTitle().alpha = 0
+                self.view?.increaseContainerHeight()
+                self.view?.updateCollectionHeighConstraint()
+                self.view?.getContainer().frame.origin.y = -titleHeigh
+                self.view?.view.layoutIfNeeded()
+            }, completion: nil)
+            
+            
+        } else {
+            
+        }
+        
+        if scrollView.contentOffset.y == 0 {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view?.getTitle().alpha = 1
+                self.view?.decreaseContainerHeight()
+                self.view?.updateCollectionHeighConstraint()
+                self.view?.getContainer().frame.origin.y = 0
+                self.view?.view.layoutIfNeeded()
+            }, completion: {_ in
+                self.updateScroll = true
+            })
+        }
+        
+    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
