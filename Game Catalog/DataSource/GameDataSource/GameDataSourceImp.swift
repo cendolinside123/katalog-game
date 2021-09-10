@@ -46,5 +46,24 @@ extension GameDataSourceImp: GameDataSourceProtocol {
         
     }
     
+    func getDetailGame(id: Int, result: @escaping ((GameDetail)-> ()), error: @escaping (() -> Void)) {
+        let params: [String: String] = ["key": Constant.key]
+        
+        AF.request("\(Constant.api)/\(id)", method: .get, parameters: params, encoder: URLEncodedFormParameterEncoder.default, headers: nil, interceptor: nil, requestModifier: nil).responseJSON(completionHandler: { response in
+            
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                result(GameDetail(json: json))
+                
+            case.failure(let errorMessage):
+                print("error getListGame: \(errorMessage)")
+                error()
+            }
+            
+        })
+        
+    }
+    
     
 }
