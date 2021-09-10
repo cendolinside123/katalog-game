@@ -110,7 +110,10 @@ class HomeViewController: UIViewController {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hContainerView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vContainerView, options: .alignAllLeft, metrics: metrix, views: views)
         constraints += [NSLayoutConstraint(item: containerView, attribute: .width, relatedBy: .equal, toItem: scrollView, attribute: .width, multiplier: 1, constant: 0)]
-        constraints += [NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: scrollView, attribute: .height, multiplier: 1, constant: 0)]
+        let containerHeight = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: scrollView, attribute: .height, multiplier: 1, constant: 0)
+        containerHeight.identifier = "containerHeight"
+        
+        constraints += [containerHeight]
 
         
         
@@ -164,6 +167,8 @@ class HomeViewController: UIViewController {
         scrollView.backgroundColor = .white
         scrollView.bounces = false
         scrollView.bouncesZoom = false
+        scrollView.isScrollEnabled = false
+        scrollView.showsVerticalScrollIndicator = false
     }
     
     private func addContainerView() {
@@ -321,10 +326,8 @@ extension HomeViewController {
         
     }
     
-    func updateContainerHeighConstraint() {
+    func updateCollectionHeighConstraint() {
         var constraints = collectionView.constraints
-        
-        
         guard let containerHeigh = constraints.firstIndex(where: { (constraint) -> Bool in
             constraint.identifier == "collectionViewHeigh"
         }) else {
@@ -342,7 +345,57 @@ extension HomeViewController {
         
 
         NSLayoutConstraint.activate(constraints)
+//        self.view.layoutIfNeeded()
+    }
+    
+    func increaseContainerHeight() {
+        var constraints = scrollView.constraints
+        
+        guard let containerHeigh = constraints.firstIndex(where: { (constraint) -> Bool in
+            constraint.identifier == "containerHeight"
+        }) else {
+            return
+        }
+        
+        print("Thread.isMainThread: \(Thread.isMainThread)")
+        
+        NSLayoutConstraint.deactivate(constraints)
+
+        print("containerView.frame.height: \(containerView.frame.height) , containerView.frame.origin.x: \(containerView.frame.origin.x)")
+        
+        constraints[containerHeigh] = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: scrollView, attribute: .height, multiplier: 1, constant: titleLabel.frame.height)
+        constraints[containerHeigh].identifier = "containerHeight"
+        NSLayoutConstraint.activate(constraints)
+//        self.view.layoutIfNeeded()
+    }
+    
+    func decreaseContainerHeight() {
+        var constraints = scrollView.constraints
+        
+        guard let containerHeigh = constraints.firstIndex(where: { (constraint) -> Bool in
+            constraint.identifier == "containerHeight"
+        }) else {
+            return
+        }
+        
+        print("Thread.isMainThread: \(Thread.isMainThread)")
+        
+        NSLayoutConstraint.deactivate(constraints)
+
+        print("containerView.height: \(containerView.frame.height) , containerView.frame.origin.x: \(containerView.frame.origin.x)")
+        
+        constraints[containerHeigh] = NSLayoutConstraint(item: containerView, attribute: .height, relatedBy: .equal, toItem: scrollView, attribute: .height, multiplier: 1, constant: 0)
+        constraints[containerHeigh].identifier = "containerHeight"
+        NSLayoutConstraint.activate(constraints)
         self.view.layoutIfNeeded()
+    }
+    
+    func getTitle() -> UILabel {
+        return titleLabel
+    }
+    
+    func getContainer() -> UIView {
+        return containerView
     }
     
 }
@@ -363,7 +416,6 @@ extension HomeViewController {
                     self.floatingAbout.center.x = 40
                 }, completion: nil)
             }
-            
             
             if self.floatingAbout.frame.origin.y > 0 {
                 if self.floatingAbout.frame.maxY >= self.view.layer.frame.height {
