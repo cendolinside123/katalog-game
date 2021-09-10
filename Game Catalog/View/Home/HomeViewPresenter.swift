@@ -121,6 +121,12 @@ extension HomeViewPresenter: UICollectionViewDelegate, UICollectionViewDataSourc
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detail = DetailMovieViewController()
+        detail.setIdGame(idGame: listGame[indexPath.item].id)
+        self.view?.present(detail, animated: true, completion: nil)
+    }
+    
 }
 
 extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
