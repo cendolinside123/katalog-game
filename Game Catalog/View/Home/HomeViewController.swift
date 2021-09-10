@@ -76,7 +76,7 @@ class HomeViewController: UIViewController {
     }
     
     private func addConstraints() {
-        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText,"textAboutMe":textAboutMe]
+        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText, "textAboutMe": textAboutMe]
         let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
