@@ -436,6 +436,7 @@ extension HomeViewController {
     
     @objc private func tapAboutMe(tap: UITapGestureRecognizer) {
         let aboutMe = AboutViewController()
+        aboutMe.modalPresentationStyle = .overFullScreen
         self.present(aboutMe, animated: true, completion: nil)
     }
 }
