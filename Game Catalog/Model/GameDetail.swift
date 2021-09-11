@@ -61,6 +61,5 @@ struct GameDetail {
         self.init(id: json["id"].intValue, slug: json["slug"].stringValue, name: json["name"].stringValue, nameOriginal: json["name_original"].stringValue, description: json["description"].stringValue, metacritic: json["metacritic"].intValue, metacriticPlatforms: metacriticPlatforms, released: json["released"].stringValue, tba: json["tba"].boolValue, updated: json["updated"].stringValue, backgroundImage: json["background_image"].stringValue, backgroundImageAdiditional: json["background_image_additional"].stringValue, website: json["website"].stringValue, rating: json["rating"].doubleValue, ratingTop: json["rating_top"].doubleValue, ratings: ratings, ratingsCount: json["ratings_count"].doubleValue)
         
     }
-    
 }
 
