@@ -75,7 +75,7 @@ class AboutViewController: UIViewController {
         imagePP.translatesAutoresizingMaskIntoConstraints = false
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let vTabRarContent = "V:|-[navBar]-10-[imagePP]-20-[labelStackView]"
+        let vTabRarContent = "V:|-0-[navBar]-10-[imagePP]-20-[labelStackView]"
         let hTabBar = "H:|-0-[navBar]-0-|"
         let hLabelStackView = "H:|-5-[labelStackView]-5-|"
         
