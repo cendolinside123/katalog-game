@@ -307,10 +307,12 @@ class DetailMovieViewController: UIViewController {
         gameTitle.textColor = .black
         gameTitle.lineBreakMode = .byWordWrapping
         gameTitle.sizeToFit()
+        gameTitle.text = "-"
     }
     
     private func addGameImage() {
         containerView.addSubview(gameImage)
+        gameImage.image = #imageLiteral(resourceName: "game")
     }
     
     private func addGameDescription() {
@@ -319,6 +321,7 @@ class DetailMovieViewController: UIViewController {
         gameDescription.textColor = .black
         gameDescription.font = gameDescription.font.withSize(10)
         gameDescription.sizeToFit()
+        gameDescription.text = "-"
     }
     
     private func addRatingBox() {
