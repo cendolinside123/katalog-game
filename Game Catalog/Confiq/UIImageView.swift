@@ -64,6 +64,59 @@ extension UIImageView {
             }
         // end
     }
+    func setImageLow(url: String, times: Int = 3) {
+        image = #imageLiteral(resourceName: "game")
+        guard let getURL = URL(string: url) else {
+            return
+        }
+        
+        
+        let imageResource = ImageResource(downloadURL: getURL, cacheKey: url)
+        
+        let task = KingfisherManager.shared.retrieveImage(with: imageResource, options: [ .processor(DownsamplingImageProcessor(size: CGSize(width: 40, height: 40))), .scaleFactor(UIScreen.main.scale), .cacheOriginalImage ]) { result in
+            switch result {
+            case .success:
+                print("cache success : \(url)")
+            case .failure(let error):
+                print("cache failed : \(error.localizedDescription) url : \(url)")
+            }
+        }
+        // start
+        ImageClassManager.sharedInstance.initialize().retrieveImage(forKey: "\(url)", options: [ .transition(.fade(10.0)), .loadDiskFileSynchronously, .forceTransition ]) { [weak self] result in
+            switch result {
+            case .success(let value):
+                DispatchQueue.main.async {
+                    self?.contentMode = .scaleAspectFill
+                    if value.cacheType == .disk {
+                        print("cache local type \(value.cacheType) url:  \(url)")
+                        task?.cancel()
+                        if let cacheImage = value.image {
+                            self?.image = cacheImage
+                            self?.contentMode = .scaleAspectFit
+                        } else {
+                            self?.image = #imageLiteral(resourceName: "game")
+                        }
+                    } else {
+                        print("cache local type \(value.cacheType) url: \(url)")
+                        self?.image = #imageLiteral(resourceName: "game")
+                        // self?.setImage(url: url, times: times - 1)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                if times > 0 {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
+                        self?.image = #imageLiteral(resourceName: "game")
+                    })
+                    self?.setImage(url: url, times: times - 1)
+                } else {
+                    self?.image = #imageLiteral(resourceName: "game")
+                    print("failed to download song url: \(url)")
+                }
+                }
+            }
+        // end
+    }
 }
 
 
