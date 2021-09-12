@@ -25,6 +25,9 @@ extension DetailMoviePresenter {
         guard let idGame = self.view?.getIdGame() else {
             return
         }
+        let loading = LoadingViewController()
+        loading.modalPresentationStyle = .overFullScreen
+        self.view?.present(loading, animated: true, completion: nil)
         gameDataSource?.getDetailGame(id: idGame, result: { [weak self] hasil in
             guard let superSelf = self else {
                 return
@@ -42,19 +45,20 @@ extension DetailMoviePresenter {
                     for ratingItem in hasil.ratings {
                         if ratingItem.id == 5 {
                             view.getExceptionalCountLabel().text = "\(ratingItem.count)"
-                            view.getExceptionalPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getExceptionalPercenBar().bounds.height)))).isActive = true
+                            view.getExceptionalPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getExceptionalPercenBar().bounds.width)))).isActive = true
                         } else if ratingItem.id == 4 {
                             view.getRecommendedCountLabel().text = "\(ratingItem.count)"
-                            view.getRecommendedPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getRecommendedPercentBar().bounds.height)))).isActive = true
+                            view.getRecommendedPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getRecommendedPercentBar().bounds.width)))).isActive = true
                         } else if ratingItem.id == 3 {
                             view.getMehCountLabel().text = "\(ratingItem.count)"
-                            view.getMehPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getMehPercentBar().bounds.height)))).isActive = true
+                            view.getMehPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getMehPercentBar().bounds.width)))).isActive = true
                         } else if ratingItem.id == 1 {
                             view.getSkipCountLabel().text = "\(ratingItem.count)"
-                            view.getSkipPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getSkipPercentBar().bounds.height)))).isActive = true
+                            view.getSkipPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(superSelf.calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getSkipPercentBar().bounds.width)))).isActive = true
                         }
                     }
                 }
+                loading.dismiss(animated: true, completion: nil)
             }
             
         }, error: {

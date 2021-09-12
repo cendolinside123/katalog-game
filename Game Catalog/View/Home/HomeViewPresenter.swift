@@ -10,12 +10,12 @@ import UIKit
 
 class HomeViewPresenter: NSObject {
     
-    var view: HomeViewController?
-    var listGame = [Game]()
-    var gameDataSource: GameDataSourceProtocol?
-    var page: Int = 1
-    var updateScroll = true
-    var doUpdate: Bool = true {
+    private var view: HomeViewController?
+    private var listGame = [Game]()
+    private var gameDataSource: GameDataSourceProtocol?
+    private var page: Int = 1
+    private var updateScroll = true
+    private var doUpdate: Bool = true {
         didSet {
             if oldValue == true && doUpdate == true {
                 doUpdate = false
@@ -49,7 +49,7 @@ class HomeViewPresenter: NSObject {
 
 extension HomeViewPresenter: HomeViewPresenterRule {
     private func loadData() {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.global().async { [weak self] in
             guard let superSelf = self else {
                 return
             }

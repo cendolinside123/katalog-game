@@ -109,10 +109,14 @@ class DetailMovieViewController: UIViewController {
             self?.dismiss(animated: true, completion: nil)
         }
         
-        presenter = DetailMoviePresenter(view: self)
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //present(alertLoading, animated: true, completion: nil)
+        presenter = DetailMoviePresenter(view: self)
+    }
 
     /*
     // MARK: - Navigation

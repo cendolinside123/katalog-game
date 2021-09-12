@@ -10,7 +10,7 @@ import UIKit
 
 class GameCollectionViewCellPresenter {
     
-    var view: GameCollectionViewCell?
+    private var view: GameCollectionViewCell?
     
     init(view: GameCollectionViewCell) {
         self.view = view
@@ -26,16 +26,16 @@ extension GameCollectionViewCellPresenter: GameCollectionViewCellProtocol {
         for ratingItem in ratings {
             if ratingItem.id == 5 {
                 view.getExceptionalCountLabel().text = "\(ratingItem.count)"
-                view.getExceptionalPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getExceptionalPercenBar().bounds.height)))).isActive = true
+                view.getExceptionalPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getExceptionalPercenBar().bounds.width)))).isActive = true
             } else if ratingItem.id == 4 {
                 view.getRecommendedCountLabel().text = "\(ratingItem.count)"
-                view.getRecommendedPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getRecommendedPercentBar().bounds.height)))).isActive = true
+                view.getRecommendedPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getRecommendedPercentBar().bounds.width)))).isActive = true
             } else if ratingItem.id == 3 {
                 view.getMehCountLabel().text = "\(ratingItem.count)"
-                view.getMehPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getMehPercentBar().bounds.height)))).isActive = true
+                view.getMehPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getMehPercentBar().bounds.width)))).isActive = true
             } else if ratingItem.id == 1 {
                 view.getSkipCountLabel().text = "\(ratingItem.count)"
-                view.getSkipPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getSkipPercentBar().bounds.height)))).isActive = true
+                view.getSkipPercenFill().widthAnchor.constraint(equalToConstant: CGFloat(calculatePercentBar(percent: ratingItem.percent, heigh: Double(view.getSkipPercentBar().bounds.width)))).isActive = true
             }
         }
     }
