@@ -142,6 +142,14 @@ extension HomeViewPresenter: UIScrollViewDelegate {
         
         print("scrollView.contentOffset.y: \(scrollView.contentOffset.y) , scrollView.frame.size.height: \(scrollView.frame.size.height), scrollView.contentSize.height: \(scrollView.contentSize.height)")
         
+        if let cell = (scrollView as? UICollectionView) {
+            let centerPoint = CGPoint(x: UIScreen.main.bounds.midX, y: scrollView.frame.midY)
+            let indexPath = cell.indexPathForItem(at: centerPoint)
+            let centerCell = cell.cellForItem(at: indexPath!) as? GameCollectionViewCell
+            centerCell?.returnGameImage().kf.cancelDownloadTask()
+//            cell.returnGameImage().kf.cancelDownloadTask()
+        }
+        
         let titleHeigh = self.view?.getTitle().frame.height ?? 0
         view?.getCollectionView().layoutIfNeeded()
         if self.updateScroll && scrollView.contentOffset.y != 0 {
