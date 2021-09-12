@@ -345,6 +345,7 @@ extension GameCollectionViewCell {
     func setupData(item: Game) {
         gameTitle.text = item.name
         // gameImage.setImage(url: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg", times: 3)
+        gameImage.setImage(url: item.name)
         presenter?.setupRatingValue(ratings: item.ratings)
         
     }
