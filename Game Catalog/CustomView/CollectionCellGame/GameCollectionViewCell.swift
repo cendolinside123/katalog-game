@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GameCollectionViewCell: UICollectionViewCell {
     
@@ -344,7 +345,13 @@ class GameCollectionViewCell: UICollectionViewCell {
 extension GameCollectionViewCell {
     func setupData(item: Game) {
         gameTitle.text = item.name
-        // gameImage.setImage(url: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg", times: 3)
+        if let url = URL(string: item.backgroundImage) {
+            gameImage.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "game"))
+        } else {
+            gameImage.image = #imageLiteral(resourceName: "game")
+        }
+        
+//        gameImage.setImage(url: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg", times: 3)
         presenter?.setupRatingValue(ratings: item.ratings)
         
     }
