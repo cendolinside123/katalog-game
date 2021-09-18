@@ -11,6 +11,15 @@ import Kingfisher
 
 
 extension UIImageView {
+    
+    func setImage(url: String) {
+        if let url = URL(string: url) {
+            self.kf.setImage(with: url, placeholder: #imageLiteral(resourceName: "game"))
+        } else {
+            self.image = #imageLiteral(resourceName: "game")
+        }
+    }
+    
     func setImage(url: String, times: Int = 3) {
         
         image = #imageLiteral(resourceName: "game")
