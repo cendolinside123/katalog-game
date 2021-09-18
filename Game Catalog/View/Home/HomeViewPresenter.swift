@@ -132,7 +132,7 @@ extension HomeViewPresenter: UICollectionViewDelegateFlowLayout {
         let totalSpacing = (2 * 10) + ((numberOfItemPerRow - 1) * spacing)
         
         let width = (Int(collectionView.bounds.width) - totalSpacing)/numberOfItemPerRow
-        return CGSize(width: width, height: width + 50)
+        return CGSize(width: width, height: width + 100)
     }
 }
 
