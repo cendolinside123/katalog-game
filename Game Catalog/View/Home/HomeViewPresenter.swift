@@ -69,6 +69,20 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                         
                         superSelf.view?.getCollectionView().insertItems(at: indexPath)
                         
+                        if let getNumberData = superSelf.view?.getCollectionView().numberOfItems(inSection: 0), getNumberData >= 50 {
+                            print("data sudah kebanyakan: \(getNumberData)")
+                            
+                            var delIndexPath = [IndexPath]()
+                            
+                            for index in 0 ... 21 {
+                                print("data i: \(index)")
+                                delIndexPath.append(IndexPath(item: index, section: 0))
+                                superSelf.listGame.remove(at: index)
+                            }
+                            superSelf.view?.getCollectionView().deleteItems(at: delIndexPath)
+                            print("data saat ini: \(superSelf.view?.getCollectionView().numberOfItems(inSection: 0))")
+                        }
+                        
                         if superSelf.page != 1 {
                             superSelf.doUpdate = true
                         } else {
@@ -111,7 +125,7 @@ extension HomeViewPresenter: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         
         cell.returnGameImage().kf.cancelDownloadTask()
-        
+        cell.returnGameImage().image = #imageLiteral(resourceName: "game")
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
