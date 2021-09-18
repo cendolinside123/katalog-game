@@ -25,6 +25,8 @@ class GameCollectionViewCell: UICollectionViewCell {
     private let containerView = UIView()
     private let gameImage = UIImageView()
     private let gameTitle = UILabel()
+    private let gameRate = UILabel()
+    private let gameReleaseDate = UILabel()
     private let ratingBox = UIView()
     private let ratingStackView: UIStackView = {
         let stack = UIStackView()
@@ -118,6 +120,8 @@ class GameCollectionViewCell: UICollectionViewCell {
         addContainerView()
         addGameImage()
         addGameLabel()
+        addGameRate()
+        addReleaseDate()
         addRatingBox()
         addExceptionalRating()
         addRecommendedRating()
@@ -231,6 +235,20 @@ class GameCollectionViewCell: UICollectionViewCell {
         gameTitle.sizeToFit()
     }
     
+    private func addGameRate() {
+        containerView.addSubview(gameRate)
+        gameRate.textColor = .black
+        gameRate.font = gameRate.font.withSize(10)
+        gameRate.text = "Score: -"
+    }
+    
+    private func addReleaseDate() {
+        containerView.addSubview(gameReleaseDate)
+        gameReleaseDate.font = gameReleaseDate.font.withSize(10)
+        gameReleaseDate.textColor = .black
+        gameReleaseDate.text = "Release: "
+    }
+    
     private func addRatingBox() {
         containerView.addSubview(ratingBox)
     }
@@ -240,6 +258,8 @@ class GameCollectionViewCell: UICollectionViewCell {
         
         contentStackView.addArrangedSubview(gameImage)
         contentStackView.addArrangedSubview(gameTitle)
+        contentStackView.addArrangedSubview(gameRate)
+        contentStackView.addArrangedSubview(gameReleaseDate)
         contentStackView.addArrangedSubview(ratingBox)
         
         ratingBox.addSubview(ratingStackView)
@@ -294,8 +314,8 @@ class GameCollectionViewCell: UICollectionViewCell {
         recommendedPercenBar.addSubview(recommendedPercenFill)
         recommendedLabel.textColor = .black
         recommendedCountLabel.textColor = .black
-        recommendedLabel.font = exceptionalLabel.font.withSize(6)
-        recommendedCountLabel.font = exceptionalCountLabel.font.withSize(8)
+        recommendedLabel.font = recommendedLabel.font.withSize(6)
+        recommendedCountLabel.font = recommendedLabel.font.withSize(8)
         recommendedCountLabel.textAlignment = .center
         recommendedPercenBar.backgroundColor = .gray
         recommendedPercenFill.backgroundColor = .blue
@@ -312,8 +332,8 @@ class GameCollectionViewCell: UICollectionViewCell {
         mehPercenBar.addSubview(mehPercenFill)
         mehLabel.textColor = .black
         mehCountLabel.textColor = .black
-        mehLabel.font = exceptionalLabel.font.withSize(10)
-        mehCountLabel.font = exceptionalCountLabel.font.withSize(8)
+        mehLabel.font = mehLabel.font.withSize(10)
+        mehCountLabel.font = mehCountLabel.font.withSize(8)
         mehCountLabel.textAlignment = .center
         mehPercenBar.backgroundColor = .gray
         mehPercenFill.backgroundColor = .red
@@ -328,10 +348,10 @@ class GameCollectionViewCell: UICollectionViewCell {
         ratingBox.addSubview(skipPercenBar)
         ratingBox.addSubview(skipCountLabel)
         skipPercenBar.addSubview(skipPercenFill)
+        skipLabel.textColor = .black
         skipCountLabel.textColor = .black
-        mehCountLabel.textColor = .black
-        skipLabel.font = exceptionalLabel.font.withSize(10)
-        skipCountLabel.font = exceptionalCountLabel.font.withSize(8)
+        skipLabel.font = skipLabel.font.withSize(10)
+        skipCountLabel.font = skipCountLabel.font.withSize(8)
         skipCountLabel.textAlignment = .center
         skipPercenBar.backgroundColor = .gray
         skipPercenFill.backgroundColor = .black
@@ -351,6 +371,8 @@ extension GameCollectionViewCell {
             gameImage.image = #imageLiteral(resourceName: "game")
         }
         
+        gameRate.text = "Score: \(item.rating)"
+        gameReleaseDate.text = "Release: \(item.released)"
 //        gameImage.setImage(url: "https://i1.sndcdn.com/artworks-000513975783-35fqbz-t500x500.jpg", times: 3)
         presenter?.setupRatingValue(ratings: item.ratings)
         
