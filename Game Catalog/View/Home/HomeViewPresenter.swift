@@ -74,13 +74,15 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                             
                             var delIndexPath = [IndexPath]()
                             
-                            for index in 0 ... 21 {
+                            for index in 0 ... 19 {
                                 print("data i: \(index)")
                                 delIndexPath.append(IndexPath(item: index, section: 0))
                                 superSelf.listGame.remove(at: index)
                             }
                             superSelf.view?.getCollectionView().deleteItems(at: delIndexPath)
                             print("data saat ini: \(superSelf.view?.getCollectionView().numberOfItems(inSection: 0))")
+                            superSelf.view?.getCollectionView().scrollToItem(at: IndexPath(item: superSelf.listGame.count - 9, section: 0), at: .bottom, animated: false)
+                            superSelf.view?.view.layoutIfNeeded()
                         }
                         
                         if superSelf.page != 1 {
