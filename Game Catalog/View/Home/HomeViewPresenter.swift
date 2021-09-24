@@ -41,6 +41,11 @@ class HomeViewPresenter: NSObject {
         self.view?.getCollectionView().register(UICollectionViewCell.self, forCellWithReuseIdentifier: "defaultCell")
         
 //        self.view?.getScrollView().delegate = self
+        let logPresReco: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        logPresReco.minimumPressDuration = 0.5
+        logPresReco.delegate = self
+        logPresReco.delaysTouchesBegan = true
+        self.view?.getCollectionView().addGestureRecognizer(logPresReco)
         self.view?.showLoadingNotifNoAnimation()
         loadData()
     }
@@ -213,4 +218,26 @@ extension HomeViewPresenter: UIScrollViewDelegate {
         }
         
     }
+}
+
+extension HomeViewPresenter {
+    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+
+        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
+            return
+        }
+
+        let point = gestureRecognizer.location(in: self.view?.getCollectionView())
+
+        if let indexPath = (self.view?.getCollectionView().indexPathForItem(at: point)) {
+//            if let cell = self.view?.getCollectionView().cellForItem(at: indexPath) as? GameCollectionViewCell {
+//
+//            }
+            print("name: \(listGame[indexPath.item].name)")
+        }
+
+    }
+}
+extension HomeViewPresenter: UIGestureRecognizerDelegate {
+    
 }
