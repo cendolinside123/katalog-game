@@ -19,6 +19,7 @@ class CoreDataStack {
         let container = NSPersistentContainer(name: self.modelName)
         
         container.loadPersistentStores(completionHandler: { storeDescription, error in
+            print("storeDescription: \(storeDescription)")
             if let getError = error as NSError? {
                 print("Unresolved error \(getError), \(getError.userInfo)")
             }
