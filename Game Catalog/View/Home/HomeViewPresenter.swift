@@ -25,7 +25,7 @@ class HomeViewPresenter: NSObject {
             }
         }
     }
-    private let gameDataSourceCoreData: GameDataSourcesProtocol? = GameDataSources()
+    private var gameDataSourceCoreData: GameDataSourcesProtocol?
     
     override init() {
         super.init()
@@ -36,6 +36,7 @@ class HomeViewPresenter: NSObject {
         self.init()
         self.view = view
         gameDataSource = GameDataSourceImp()
+        gameDataSourceCoreData = GameDataSources()
         self.view?.getCollectionView().delegate = self
         self.view?.getCollectionView().dataSource = self
         self.view?.getCollectionView().register(GameCollectionViewCell.self, forCellWithReuseIdentifier: "gameCell")
