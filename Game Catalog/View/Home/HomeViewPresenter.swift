@@ -25,6 +25,7 @@ class HomeViewPresenter: NSObject {
             }
         }
     }
+    private let gameDataSourceCoreData: GameDataSourcesProtocol? = GameDataSources()
     
     override init() {
         super.init()
@@ -85,7 +86,7 @@ extension HomeViewPresenter: HomeViewPresenterRule {
                                 superSelf.listGame.remove(at: index)
                             }
                             superSelf.view?.getCollectionView().deleteItems(at: delIndexPath)
-                            print("data saat ini: \(superSelf.view?.getCollectionView().numberOfItems(inSection: 0))")
+//                            print("data saat ini: \(superSelf.view?.getCollectionView().numberOfItems(inSection: 0))")
                             superSelf.view?.getCollectionView().scrollToItem(at: IndexPath(item: superSelf.listGame.count - 9, section: 0), at: .bottom, animated: false)
                             superSelf.view?.view.layoutIfNeeded()
                         }
@@ -233,7 +234,37 @@ extension HomeViewPresenter {
 //            if let cell = self.view?.getCollectionView().cellForItem(at: indexPath) as? GameCollectionViewCell {
 //
 //            }
+            let alert = UIAlertController(title: "Add to favorite", message: "Do you want add \(listGame[indexPath.item].name) to your favorite list", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { [weak self] _ in
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.view?.getCoreDataStack()?.doInBackground(managedContext: { context in
+                    
+                    strongSelf.gameDataSourceCoreData?.getaGame(managedContext: context, id: strongSelf.listGame[indexPath.item].id, success: { result in
+                        print("result: \(result)")
+                    }, failed: {
+                        print("gagal memperoleh data dari core data")
+                        
+                        strongSelf.view?.getCoreDataStack()?.doInBackground(managedContext: { context in
+                            strongSelf.gameDataSourceCoreData?.addaGame(managedContext: context, game: strongSelf.listGame[indexPath.item], success: {
+//                                
+                            }, failed: {
+                                print("gagal input data game ke core data")
+                            })
+                        })
+                        
+                    })
+                })
+                
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { _ in
+                
+            }))
+            self.view?.present(alert, animated: true)
             print("name: \(listGame[indexPath.item].name)")
+            
         }
 
     }
