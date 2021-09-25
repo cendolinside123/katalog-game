@@ -94,6 +94,13 @@ extension FavoriteViewPresenter {
                 strongSelf.view?.getCoreDataStack()?.doInBackground(managedContext: { context in
                     
                     strongSelf.gameDataSourceCoreData?.deleteaGame(managedContext: context, id: strongSelf.listGame[indexPath.item].id, success: {
+                        
+                        DispatchQueue.main.async {
+                            let alertSuccess = UIAlertController(title: "Delete", message: " \(strongSelf.listGame[indexPath.item].name) deleted from your favorite list", preferredStyle: UIAlertController.Style.alert)
+                            alertSuccess.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                            strongSelf.view?.present(alertSuccess, animated: true)
+                        }
+                        
                         strongSelf.loadData()
                     }, failed: {
                         print("delete failed")

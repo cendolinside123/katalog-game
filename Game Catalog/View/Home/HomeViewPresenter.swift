@@ -245,12 +245,23 @@ extension HomeViewPresenter {
                     
                     strongSelf.gameDataSourceCoreData?.getaGame(managedContext: context, id: strongSelf.listGame[indexPath.item].id, success: { result in
                         print("result: \(result)")
+                        DispatchQueue.main.async {
+                            alert.dismiss(animated: true, completion: {
+                                let alertDataAvailable = UIAlertController(title: "Warning", message: " \(strongSelf.listGame[indexPath.item].name) alreaady add to your favorite list", preferredStyle: UIAlertController.Style.alert)
+                                alertDataAvailable.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                                strongSelf.view?.present(alertDataAvailable, animated: true)
+                            })
+                        }
                     }, failed: {
                         print("gagal memperoleh data dari core data")
                         
                         strongSelf.view?.getCoreDataStack()?.doInBackground(managedContext: { context in
                             strongSelf.gameDataSourceCoreData?.addaGame(managedContext: context, game: strongSelf.listGame[indexPath.item], success: {
-//                                
+                                DispatchQueue.main.async {
+                                    let alertSuccess = UIAlertController(title: "Success", message: " \(strongSelf.listGame[indexPath.item].name) added to your favorite list", preferredStyle: UIAlertController.Style.alert)
+                                    alertSuccess.addAction(UIAlertAction(title: "Ok", style: .cancel))
+                                    strongSelf.view?.present(alertSuccess, animated: true)
+                                }
                             }, failed: {
                                 print("gagal input data game ke core data")
                             })
