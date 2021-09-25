@@ -62,7 +62,20 @@ class HomeViewController: UIViewController {
         addLayouts()
         addConstraints()
         tabBar.isLeftButtonHidden = true
-        tabBar.isRightButtonHidden = true
+//        tabBar.isRightButtonHidden = true
+        
+        tabBar.setRightButtonText(text: "Favorite")
+        tabBar.rightButtonAction = { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            let favoriteVC = FavoriteViewController()
+            guard let coreData = strongSelf.coreDataStack else {
+                return
+            }
+            favoriteVC.setCoreDataStack(coreData: coreData)
+            strongSelf.navigationController?.pushViewController(favoriteVC, animated: true)
+        }
         
         presenter = HomeViewPresenter(view: self)
     }
