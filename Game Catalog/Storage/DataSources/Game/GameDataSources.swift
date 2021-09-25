@@ -15,7 +15,7 @@ class GameDataSources {
 extension GameDataSources: GameDataSourcesProtocol {
     func addAllGames(managedContext: NSManagedObjectContext, game: [Game], success: () -> Void, failed: () -> Void) {
         do {
-            
+            // note: di sini attribute coredata dari entity Games yang disimpan emang sengaja tidak mengikuti model Game, karena property pada model Game terlalu banyak dan tidak terlalu pentig untuk di simpan
             for dataGame in game {
                 let aGame = Games(context: managedContext)
                 aGame.id = Int64(dataGame.id)
@@ -55,7 +55,7 @@ extension GameDataSources: GameDataSourcesProtocol {
                     }
                 }
                 
-                
+                // note: di sini attribute coredata dari entity Games yang disimpan emang sengaja tidak mengikuti model Game, karena property pada model Game terlalu banyak dan tidak terlalu pentig untuk di simpan
                 let game = Game(id: Int(gameData.id), slug: gameData.name ?? "", name: gameData.name ?? "", released: "\(gameData.releaseDate ?? "")", tba: false, backgroundImage: gameData.backgroundImage ?? "", rating: Double(gameData.score), ratingTop: 0, ratings: rating, ratingsCount: 0, reviewsTextCount: 0, added: 0, addedByStatus: AddedStatus(yet: 0, owned: 0, beaten: 0, toplay: 0, dropped: 0, playing: 0), metacritic: 0, playtime: 0, suggestionsCount: 0, updated: "", usergame: "", reviewsCount: 0, saturatedColor: "", dominantColor: "", platforms: [])
                 listGame.append(game)
                 
@@ -88,7 +88,7 @@ extension GameDataSources: GameDataSourcesProtocol {
                 }
             }
             
-            
+            // note: di sini attribute coredata dari entity Games yang disimpan emang sengaja tidak mengikuti model Game, karena property pada model Game terlalu banyak dan tidak terlalu pentig untuk di simpan
             let game = Game(id: Int(getaGame.id), slug: getaGame.name ?? "", name: getaGame.name ?? "", released: "\(getaGame.releaseDate ?? ""))", tba: false, backgroundImage: getaGame.backgroundImage ?? "", rating: Double(getaGame.score), ratingTop: 0, ratings: rating, ratingsCount: 0, reviewsTextCount: 0, added: 0, addedByStatus: AddedStatus(yet: 0, owned: 0, beaten: 0, toplay: 0, dropped: 0, playing: 0), metacritic: 0, playtime: 0, suggestionsCount: 0, updated: "", usergame: "", reviewsCount: 0, saturatedColor: "", dominantColor: "", platforms: [])
             success(game)
             
@@ -160,7 +160,7 @@ extension GameDataSources: GameDataSourcesProtocol {
         }
     }
     
-    func deleteaGame(managedContext: NSManagedObjectContext, game: Game, id: Int, success: () -> Void, failed: () -> Void) {
+    func deleteaGame(managedContext: NSManagedObjectContext, id: Int, success: () -> Void, failed: () -> Void) {
         let fetchGame: NSFetchRequest<Games> = Games.fetchRequest()
         fetchGame.predicate = NSPredicate(format: "%K == %@", (\Games.id)._kvcKeyPathString!, String(id))
         do {
