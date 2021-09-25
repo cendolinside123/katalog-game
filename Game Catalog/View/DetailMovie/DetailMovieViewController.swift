@@ -114,7 +114,7 @@ class DetailMovieViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //present(alertLoading, animated: true, completion: nil)
+        // present(alertLoading, animated: true, completion: nil)
         presenter = DetailMoviePresenter(view: self)
     }
 

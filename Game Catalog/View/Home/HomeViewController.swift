@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
     private let textAboutMe = UILabel()
     
     private var presenter: HomeViewPresenterRule?
-    private var coreDataStack: CoreDataStack? = nil
+    private var coreDataStack: CoreDataStack?
 
     override func viewDidLoad() {
         super.viewDidLoad()
