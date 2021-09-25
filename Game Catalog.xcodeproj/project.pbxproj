@@ -11,6 +11,9 @@
 		0448EEF326FEFF0D007FDDF9 /* Games+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EEEF26FEFF0D007FDDF9 /* Games+CoreDataProperties.swift */; };
 		0448EEF426FEFF0D007FDDF9 /* Ratings+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EEF026FEFF0D007FDDF9 /* Ratings+CoreDataClass.swift */; };
 		0448EEF526FEFF0D007FDDF9 /* Games+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EEF126FEFF0D007FDDF9 /* Games+CoreDataClass.swift */; };
+		0448EEF826FF0C57007FDDF9 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EEF726FF0C57007FDDF9 /* FavoriteViewController.swift */; };
+		0448EEFA26FF1F31007FDDF9 /* FavoriteViewPresenterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EEF926FF1F31007FDDF9 /* FavoriteViewPresenterRule.swift */; };
+		0448EEFC26FF2199007FDDF9 /* FavoriteViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448EEFB26FF2199007FDDF9 /* FavoriteViewPresenter.swift */; };
 		045612D426E5C9AE003CCCE5 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045612D326E5C9AE003CCCE5 /* UIImageView.swift */; };
 		045612D726E620E0003CCCE5 /* HomeViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045612D626E620E0003CCCE5 /* HomeViewPresenter.swift */; };
 		045612DA26E620F3003CCCE5 /* HomeViewPresenterRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045612D926E620F3003CCCE5 /* HomeViewPresenterRule.swift */; };
@@ -53,6 +56,9 @@
 		0448EEEF26FEFF0D007FDDF9 /* Games+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Games+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0448EEF026FEFF0D007FDDF9 /* Ratings+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ratings+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0448EEF126FEFF0D007FDDF9 /* Games+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Games+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0448EEF726FF0C57007FDDF9 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		0448EEF926FF1F31007FDDF9 /* FavoriteViewPresenterRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewPresenterRule.swift; sourceTree = "<group>"; };
+		0448EEFB26FF2199007FDDF9 /* FavoriteViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewPresenter.swift; sourceTree = "<group>"; };
 		045612D326E5C9AE003CCCE5 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		045612D626E620E0003CCCE5 /* HomeViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenter.swift; sourceTree = "<group>"; };
 		045612D926E620F3003CCCE5 /* HomeViewPresenterRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewPresenterRule.swift; sourceTree = "<group>"; };
@@ -106,6 +112,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0448EEF626FF0C23007FDDF9 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				0448EEF726FF0C57007FDDF9 /* FavoriteViewController.swift */,
+				0448EEF926FF1F31007FDDF9 /* FavoriteViewPresenterRule.swift */,
+				0448EEFB26FF2199007FDDF9 /* FavoriteViewPresenter.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
 		04658CA226E1D55C0094B322 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +172,7 @@
 		04658CC426E1DC870094B322 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0448EEF626FF0C23007FDDF9 /* Favorite */,
 				04658CD126E1DFF00094B322 /* About */,
 				04658CCC26E1DF880094B322 /* DetailMovie */,
 				04658CC726E1DF670094B322 /* Home */,
@@ -472,12 +489,15 @@
 				04EC186726E389E20087128A /* GameCollectionViewCell.swift in Sources */,
 				04658CE026E253360094B322 /* Rating.swift in Sources */,
 				04F0F3D626E3BB34002CBAF2 /* GameDataSourceImp.swift in Sources */,
+				0448EEF826FF0C57007FDDF9 /* FavoriteViewController.swift in Sources */,
+				0448EEFA26FF1F31007FDDF9 /* FavoriteViewPresenterRule.swift in Sources */,
 				04B9012626ED03C700497F9F /* GameCollectionViewCellProtocol.swift in Sources */,
 				0448EEF526FEFF0D007FDDF9 /* Games+CoreDataClass.swift in Sources */,
 				04658CC926E1DF820094B322 /* HomeViewController.swift in Sources */,
 				0478F89926EB96A400D39F6F /* DetailMoviePresenterRule.swift in Sources */,
 				049C7D2226FD02B7002084B1 /* GameDataSources.swift in Sources */,
 				04B9012926ED03FF00497F9F /* GameCollectionViewCellPresenter.swift in Sources */,
+				0448EEFC26FF2199007FDDF9 /* FavoriteViewPresenter.swift in Sources */,
 				045612D426E5C9AE003CCCE5 /* UIImageView.swift in Sources */,
 				04D669E326EA01F10034517E /* MetacriticPlatforms.swift in Sources */,
 				04658CDD26E252650094B322 /* Game.swift in Sources */,
