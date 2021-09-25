@@ -18,7 +18,8 @@ extension Games {
 
     @NSManaged public var id: Int64
     @NSManaged public var name: String?
-    @NSManaged public var releaseDate: Date?
+    @NSManaged public var releaseDate: String?
+    @NSManaged public var backgroundImage: String?
     @NSManaged public var score: Int64
     @NSManaged public var rating: NSSet?
 

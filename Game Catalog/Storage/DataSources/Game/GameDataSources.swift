@@ -21,10 +21,8 @@ extension GameDataSources: GameDataSourcesProtocol {
                 aGame.id = Int64(dataGame.id)
                 aGame.name = dataGame.name
                 aGame.score = Int64(dataGame.rating)
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy'-'MM'-'DD'"
-                aGame.releaseDate = dateFormatter.date(from: dataGame.released)
-                
+                aGame.releaseDate = dataGame.released
+                aGame.backgroundImage = dataGame.backgroundImage
                 
                 try managedContext.save()
             }
@@ -58,7 +56,7 @@ extension GameDataSources: GameDataSourcesProtocol {
                 }
                 
                 
-                let game = Game(id: Int(gameData.id), slug: gameData.name ?? "", name: gameData.name ?? "", released: "\(gameData.releaseDate ?? Date())", tba: false, backgroundImage: "", rating: Double(gameData.score), ratingTop: 0, ratings: rating, ratingsCount: 0, reviewsTextCount: 0, added: 0, addedByStatus: AddedStatus(yet: 0, owned: 0, beaten: 0, toplay: 0, dropped: 0, playing: 0), metacritic: 0, playtime: 0, suggestionsCount: 0, updated: "", usergame: "", reviewsCount: 0, saturatedColor: "", dominantColor: "", platforms: [])
+                let game = Game(id: Int(gameData.id), slug: gameData.name ?? "", name: gameData.name ?? "", released: "\(gameData.releaseDate ?? "")", tba: false, backgroundImage: gameData.backgroundImage ?? "", rating: Double(gameData.score), ratingTop: 0, ratings: rating, ratingsCount: 0, reviewsTextCount: 0, added: 0, addedByStatus: AddedStatus(yet: 0, owned: 0, beaten: 0, toplay: 0, dropped: 0, playing: 0), metacritic: 0, playtime: 0, suggestionsCount: 0, updated: "", usergame: "", reviewsCount: 0, saturatedColor: "", dominantColor: "", platforms: [])
                 listGame.append(game)
                 
             }
@@ -91,7 +89,7 @@ extension GameDataSources: GameDataSourcesProtocol {
             }
             
             
-            let game = Game(id: Int(getaGame.id), slug: getaGame.name ?? "", name: getaGame.name ?? "", released: "\(getaGame.releaseDate ?? Date())", tba: false, backgroundImage: "", rating: Double(getaGame.score), ratingTop: 0, ratings: rating, ratingsCount: 0, reviewsTextCount: 0, added: 0, addedByStatus: AddedStatus(yet: 0, owned: 0, beaten: 0, toplay: 0, dropped: 0, playing: 0), metacritic: 0, playtime: 0, suggestionsCount: 0, updated: "", usergame: "", reviewsCount: 0, saturatedColor: "", dominantColor: "", platforms: [])
+            let game = Game(id: Int(getaGame.id), slug: getaGame.name ?? "", name: getaGame.name ?? "", released: "\(getaGame.releaseDate ?? ""))", tba: false, backgroundImage: getaGame.backgroundImage ?? "", rating: Double(getaGame.score), ratingTop: 0, ratings: rating, ratingsCount: 0, reviewsTextCount: 0, added: 0, addedByStatus: AddedStatus(yet: 0, owned: 0, beaten: 0, toplay: 0, dropped: 0, playing: 0), metacritic: 0, playtime: 0, suggestionsCount: 0, updated: "", usergame: "", reviewsCount: 0, saturatedColor: "", dominantColor: "", platforms: [])
             success(game)
             
             
@@ -128,10 +126,8 @@ extension GameDataSources: GameDataSourcesProtocol {
             aGame.id = Int64(game.id)
             aGame.name = game.name
             aGame.score = Int64(game.rating)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy'-'MM'-'dd'"
-            aGame.releaseDate = dateFormatter.date(from: game.released)
-            
+            aGame.releaseDate = game.released
+            aGame.backgroundImage = game.backgroundImage
             
             try managedContext.save()
 //            success()

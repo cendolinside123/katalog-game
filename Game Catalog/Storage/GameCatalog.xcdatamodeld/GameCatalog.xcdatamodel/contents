@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Games" representedClassName="Games" syncable="YES">
+        <attribute name="backgroundImage" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="releaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="releaseDate" optional="YES" attributeType="String"/>
         <attribute name="score" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="rating" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ratings" inverseName="game" inverseEntity="Ratings"/>
     </entity>
@@ -15,7 +16,7 @@
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Games" inverseName="rating" inverseEntity="Games"/>
     </entity>
     <elements>
-        <element name="Games" positionX="-2450.570190429688" positionY="-404.1907958984375" width="128" height="104"/>
+        <element name="Games" positionX="-2450.570190429688" positionY="-404.1907958984375" width="128" height="119"/>
         <element name="Ratings" positionX="-2155.946044921875" positionY="-491.6724853515625" width="128" height="104"/>
     </elements>
 </model>
