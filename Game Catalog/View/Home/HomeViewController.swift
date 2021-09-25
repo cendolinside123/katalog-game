@@ -53,6 +53,7 @@ class HomeViewController: UIViewController {
     private let textAboutMe = UILabel()
     
     private var presenter: HomeViewPresenterRule?
+    private var coreDataStack: CoreDataStack? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -440,5 +441,14 @@ extension HomeViewController {
         let aboutMe = AboutViewController()
         aboutMe.modalPresentationStyle = .overFullScreen
         self.present(aboutMe, animated: true, completion: nil)
+    }
+}
+extension HomeViewController {
+    func getCoreDataStack() -> CoreDataStack? {
+        return coreDataStack
+    }
+    
+    func setCoreDataStack(coreData: CoreDataStack) {
+        self.coreDataStack = coreData
     }
 }
