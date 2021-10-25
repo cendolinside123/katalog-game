@@ -11,8 +11,10 @@ import SwiftyJSON
 
 class GameDataSourceImp {
     
+    private let gameDataRequest: GameDataRequestProtocol
+    
     init() {
-        
+        gameDataRequest = GameDataRequestImp()
     }
     
 }
@@ -25,22 +27,15 @@ extension GameDataSourceImp: GameDataSourceProtocol {
         
         let params: [String: String] = ["key": Constant.key, "page_size": "10", "page": "\(page)" ]
         
-        AF.request(Constant.api, method: .get, parameters: params, encoder: URLEncodedFormParameterEncoder.default, headers: nil, interceptor: nil, requestModifier: nil).responseJSON(completionHandler: { response in
+        gameDataRequest.getListGame(params: params, result: { json in
             
-            switch response.result {
-            case .success(let data):
-                let json = JSON(data)
-                var listGame = [Game]()
-                
-                for(_, subJson):(String, JSON) in json["results"] {
-                    listGame.append(Game(json: subJson))
-                }
-                result(listGame)
-                
-            case.failure(let errorMessage):
-                print("error getListGame: \(errorMessage)")
-                error()
+            var listGame = [Game]()
+            
+            for(_, subJson):(String, JSON) in json["results"] {
+                listGame.append(Game(json: subJson))
             }
+            result(listGame)
+        }, error: {
             
         })
         
@@ -49,18 +44,10 @@ extension GameDataSourceImp: GameDataSourceProtocol {
     func getDetailGame(id: Int, result: @escaping ((GameDetail) -> Void), error: @escaping (() -> Void)) {
         let params: [String: String] = ["key": Constant.key]
         
-        AF.request("\(Constant.api)/\(id)", method: .get, parameters: params, encoder: URLEncodedFormParameterEncoder.default, headers: nil, interceptor: nil, requestModifier: nil).responseJSON(completionHandler: { response in
-            
-            switch response.result {
-            case .success(let data):
-                let json = JSON(data)
-                result(GameDetail(json: json))
-                
-            case.failure(let errorMessage):
-                print("error getListGame: \(errorMessage)")
-                error()
-            }
-            
+        gameDataRequest.getDetailGame(id: id, params: params, result: { json in
+            result(GameDetail(json: json))
+        }, error: {
+            error()
         })
         
     }
