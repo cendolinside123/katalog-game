@@ -12,3 +12,8 @@ target 'Game Catalog' do
   pod 'Kingfisher'
 
 end
+
+target 'Game CatalogTests' do
+  pod 'Alamofire'
+  pod 'SwiftyJSON'
+end
