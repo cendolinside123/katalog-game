@@ -16,4 +16,5 @@ protocol GameDataSourcesProtocol {
     func addaGame(managedContext: NSManagedObjectContext, game: Game, success: () -> Void, failed: () -> Void)
     func deleteaGame(managedContext: NSManagedObjectContext, id: Int, success: () -> Void, failed: () -> Void)
     func addAllGameRatings(managedContext: NSManagedObjectContext, game: [Game], success: () -> Void, failed: () -> Void)
+    func addGameRating(managedContext: NSManagedObjectContext, game: Game, success: () -> Void, failed: () -> Void)
 }
