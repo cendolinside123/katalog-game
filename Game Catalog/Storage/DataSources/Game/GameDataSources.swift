@@ -71,7 +71,8 @@ extension GameDataSources: GameDataSourcesProtocol {
     
     func getaGame(managedContext: NSManagedObjectContext, id: Int, success: (Game) -> Void, failed: () -> Void) {
         let fetchGame: NSFetchRequest<Games> = Games.fetchRequest()
-        fetchGame.predicate = NSPredicate(format: "%K == %@", (\Games.id)._kvcKeyPathString!, String(id))
+        fetchGame.predicate = NSPredicate(format: "%K == \(id)", (\Games.id)._kvcKeyPathString!)
+//        fetchGame.predicate = NSPredicate(format: "%K == %@", (\Games.id)._kvcKeyPathString!, String(id))
         do {
             
             guard let getaGame = try managedContext.fetch(fetchGame).first else {
@@ -130,28 +131,7 @@ extension GameDataSources: GameDataSourcesProtocol {
             aGame.backgroundImage = game.backgroundImage
             
             try managedContext.save()
-//            success()
-            
-            let fetchGame: NSFetchRequest<Games> = Games.fetchRequest()
-            fetchGame.predicate = NSPredicate(format: "%K == %@", (\Games.id)._kvcKeyPathString!, String(game.id))
-            
-            if let getaGames = try managedContext.fetch(fetchGame).first, let editGame = getaGames.rating?.mutableCopy() as? NSMutableSet {
-                
-                for dataRating in game.ratings {
-                    let ratings = Ratings(context: managedContext)
-                    ratings.id = Int16(dataRating.id)
-                    ratings.percent = dataRating.percent
-                    ratings.count = dataRating.count
-                    ratings.title = dataRating.title
-                    ratings.game = getaGames
-                    editGame.add(ratings)
-                }
-                
-                try managedContext.save()
-                success()
-            } else {
-                failed()
-            }
+            success()
             
             
         } catch let error as NSError {
@@ -162,7 +142,9 @@ extension GameDataSources: GameDataSourcesProtocol {
     
     func deleteaGame(managedContext: NSManagedObjectContext, id: Int, success: () -> Void, failed: () -> Void) {
         let fetchGame: NSFetchRequest<Games> = Games.fetchRequest()
-        fetchGame.predicate = NSPredicate(format: "%K == %@", (\Games.id)._kvcKeyPathString!, String(id))
+        fetchGame.predicate = NSPredicate(format: "%K == \(id)", (\Games.id)._kvcKeyPathString!)
+//        fetchGame.predicate = NSPredicate(format: "id == \(id)")
+        print("fetchGame.description: \(fetchGame.description)")
         do {
             
             if let getaGames = try managedContext.fetch(fetchGame).first {
@@ -215,6 +197,37 @@ extension GameDataSources: GameDataSourcesProtocol {
             print("Could not fetch \(error), \(error.userInfo)")
             failed()
         }
+    }
+    
+    func addGameRating(managedContext: NSManagedObjectContext, game: Game, success: () -> Void, failed: () -> Void) {
+        
+        let fetchGame: NSFetchRequest<Games> = Games.fetchRequest()
+        fetchGame.predicate = NSPredicate(format: "%K == \(game.id)", (\Games.id)._kvcKeyPathString!)
+//        fetchGame.predicate = NSPredicate(format: "id == \(game.id)")
+        print("fetchGame.description: \(fetchGame.description)")
+        do {
+            if let getaGames = try managedContext.fetch(fetchGame).first, let editGame = getaGames.rating?.mutableCopy() as? NSMutableSet {
+                
+                for dataRating in game.ratings {
+                    let ratings = Ratings(context: managedContext)
+                    ratings.id = Int16(dataRating.id)
+                    ratings.percent = dataRating.percent
+                    ratings.count = dataRating.count
+                    ratings.title = dataRating.title
+                    ratings.game = getaGames
+                    editGame.add(ratings)
+                }
+                
+                try managedContext.save()
+                success()
+            } else {
+                failed()
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            failed()
+        }
+        
     }
     
 }
