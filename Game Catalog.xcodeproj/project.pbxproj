@@ -44,6 +44,7 @@
 		04B9012926ED03FF00497F9F /* GameCollectionViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B9012826ED03FF00497F9F /* GameCollectionViewCellPresenter.swift */; };
 		04D669DC26E9BC0C0034517E /* GameDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D669DB26E9BC0C0034517E /* GameDetail.swift */; };
 		04D669E326EA01F10034517E /* MetacriticPlatforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D669E226EA01F10034517E /* MetacriticPlatforms.swift */; };
+		04E3B199272ABFBE00B2C2ED /* CoreDataStackTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E3B198272ABFBE00B2C2ED /* CoreDataStackTest.swift */; };
 		04EC186326E388780087128A /* Platforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC186226E388780087128A /* Platforms.swift */; };
 		04EC186726E389E20087128A /* GameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC186626E389E20087128A /* GameCollectionViewCell.swift */; };
 		04EC186C26E38A280087128A /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EC186B26E38A280087128A /* CustomTabBar.swift */; };
@@ -107,6 +108,7 @@
 		04B9012826ED03FF00497F9F /* GameCollectionViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCollectionViewCellPresenter.swift; sourceTree = "<group>"; };
 		04D669DB26E9BC0C0034517E /* GameDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetail.swift; sourceTree = "<group>"; };
 		04D669E226EA01F10034517E /* MetacriticPlatforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetacriticPlatforms.swift; sourceTree = "<group>"; };
+		04E3B198272ABFBE00B2C2ED /* CoreDataStackTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTest.swift; sourceTree = "<group>"; };
 		04EC186226E388780087128A /* Platforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platforms.swift; sourceTree = "<group>"; };
 		04EC186626E389E20087128A /* GameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCollectionViewCell.swift; sourceTree = "<group>"; };
 		04EC186B26E38A280087128A /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				04FC970127215BE7001EB648 /* GameDataSource.swift */,
 				04FC96EB27210BA4001EB648 /* GameCatalogTests.swift */,
 				044F3E292727A27200B6DEBF /* GameRequestTest.swift */,
+				04E3B198272ABFBE00B2C2ED /* CoreDataStackTest.swift */,
 			);
 			path = "Game CatalogTests";
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 				044F3E2A2727A27200B6DEBF /* GameRequestTest.swift in Sources */,
 				04FC970227215BE7001EB648 /* GameDataSource.swift in Sources */,
 				04FC96EC27210BA4001EB648 /* GameCatalogTests.swift in Sources */,
+				04E3B199272ABFBE00B2C2ED /* CoreDataStackTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
