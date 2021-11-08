@@ -54,4 +54,13 @@ class CoreDataStack {
             managedContext(context)
         })
     }
+    
+    
+    func getStoreContainer() -> NSPersistentContainer {
+        return storeContainer
+    }
+    
+    func setStroreContainer(container: NSPersistentContainer) {
+        storeContainer = container
+    }
 }
