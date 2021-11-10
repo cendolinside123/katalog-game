@@ -9,6 +9,7 @@ import UIKit
 
 class AboutViewController: UIViewController {
 
+    private let outerTabBar = UIView()
     private let navBar = CustomTabBar()
     private let imagePP = UIImageView()
     private let nameLabel = UILabel()
@@ -62,21 +63,21 @@ class AboutViewController: UIViewController {
     }
     
     private func addConstraints() {
-        let views = ["navBar": navBar, "imagePP": imagePP, "nameLabel": nameLabel, "emailLabel": emailLabel, "gitHubLabel": gitHubLabel, "labelStackView": labelStackView]
+        let views = ["outerTabBar": outerTabBar, "navBar": navBar, "imagePP": imagePP, "nameLabel": nameLabel, "emailLabel": emailLabel, "gitHubLabel": gitHubLabel, "labelStackView": labelStackView]
         
         let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
         
         
-        // MARK: navBar , imagePP and labelStackView constraints
+        // MARK: outerTabBar , imagePP and labelStackView constraints
         
-        navBar.translatesAutoresizingMaskIntoConstraints = false
+        outerTabBar.translatesAutoresizingMaskIntoConstraints = false
         imagePP.translatesAutoresizingMaskIntoConstraints = false
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let vTabRarContent = "V:|-0-[navBar]-10-[imagePP]-20-[labelStackView]"
-        let hTabBar = "H:|-0-[navBar]-0-|"
+        let vTabRarContent = "V:|-0-[outerTabBar]-10-[imagePP]-20-[labelStackView]"
+        let hTabBar = "H:|-0-[outerTabBar]-0-|"
         let hLabelStackView = "H:|-5-[labelStackView]-5-|"
         
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vTabRarContent, options: .alignAllCenterX, metrics: metrix, views: views)
@@ -87,6 +88,13 @@ class AboutViewController: UIViewController {
         constraints += [NSLayoutConstraint(item: labelStackView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/9, constant: 0)]
         constraints += [NSLayoutConstraint(item: imagePP, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 2/9, constant: 0)]
         constraints += [NSLayoutConstraint(item: imagePP, attribute: .height, relatedBy: .equal, toItem: imagePP, attribute: .width, multiplier: 1, constant: 0)]
+        
+        // MARK: navBar constraints
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        let hInnerTabBar = "H:|-0-[navBar]-0-|"
+        let vInnerTabBar = "V:|-0-[navBar]-0-|"
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hInnerTabBar, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: vInnerTabBar, options: .alignAllLeft, metrics: metrix, views: views)
         
         
         // MARK: nameLabel , emailLabel , and gitHubLabel
@@ -105,7 +113,9 @@ class AboutViewController: UIViewController {
     }
     
     private func addTabBar() {
-        view.addSubview(navBar)
+        outerTabBar.backgroundColor = .yellow
+        view.addSubview(outerTabBar)
+        outerTabBar.addSubview(navBar)
     }
     
     private func addImagePP() {
