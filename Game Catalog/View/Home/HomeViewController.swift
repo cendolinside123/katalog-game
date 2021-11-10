@@ -108,7 +108,7 @@ class HomeViewController: UIViewController {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hScrollView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vTabBarScrollView, options: .alignAllLeft, metrics: metrix, views: views)
-        constraints += [NSLayoutConstraint(item: tabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
+        constraints += [NSLayoutConstraint(item: outerTabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
         // constraints += [NSLayoutConstraint(item: scrollView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)]
         tabBar.translatesAutoresizingMaskIntoConstraints = false
         let hInnerTabBar = "H:|-0-[tabBar]-0-|"

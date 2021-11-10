@@ -84,7 +84,7 @@ class AboutViewController: UIViewController {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hLabelStackView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += [NSLayoutConstraint(item: imagePP, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)]
-        constraints += [NSLayoutConstraint(item: navBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.8/9, constant: 0)]
+        constraints += [NSLayoutConstraint(item: outerTabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 0.8/9, constant: 0)]
         constraints += [NSLayoutConstraint(item: labelStackView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/9, constant: 0)]
         constraints += [NSLayoutConstraint(item: imagePP, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 2/9, constant: 0)]
         constraints += [NSLayoutConstraint(item: imagePP, attribute: .height, relatedBy: .equal, toItem: imagePP, attribute: .width, multiplier: 1, constant: 0)]
