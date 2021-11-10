@@ -9,12 +9,10 @@ import UIKit
 
 class FavoriteViewController: UIViewController {
     
+    private let outerTabBar = UIView()
     private let tabBar = CustomTabBar()
-    
     private let titleLabel = UILabel()
-    
     private let scrollView = UIScrollView()
-    
     private let containerView = UIView()
     
     private let homeStackView: UIStackView = {
@@ -84,23 +82,29 @@ class FavoriteViewController: UIViewController {
     }
     
     private func addConstraints() {
-        let views = ["tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText]
+        let views = ["outerTabBar": outerTabBar, "tabBar": tabBar, "scrollView": scrollView, "containerView": containerView, "homeStackView": homeStackView, "collectionView": collectionView, "titleLabel": titleLabel, "loadingNotif": loadingNotif, "loadingText": loadingText]
         let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
         
-        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        outerTabBar.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         let hScrollView = "H:|-5-[scrollView]-5-|"
-        let hTabBar = "H:|-0-[tabBar]-0-|"
-        let vTabBarScrollView = "V:|-0-[tabBar]-0-[scrollView]-0-|"
+        let hTabBar = "H:|-0-[outerTabBar]-0-|"
+        let vTabBarScrollView = "V:|-0-[outerTabBar]-0-[scrollView]-0-|"
         
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hScrollView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vTabBarScrollView, options: .alignAllLeft, metrics: metrix, views: views)
-        constraints += [NSLayoutConstraint(item: tabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
+        constraints += [NSLayoutConstraint(item: outerTabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
         // constraints += [NSLayoutConstraint(item: scrollView, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0)]
         
+        
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        let hInnerTabBar = "H:|-0-[tabBar]-0-|"
+        let vInnerTabBar = "V:|-0-[tabBar]-0-|"
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hInnerTabBar, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: vInnerTabBar, options: .alignAllLeft, metrics: metrix, views: views)
         
         
         homeStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -158,8 +162,9 @@ class FavoriteViewController: UIViewController {
     }
     
     private func addTabBar() {
-        view.addSubview(tabBar)
-        // tabBar.backgroundColor = .blue
+        outerTabBar.backgroundColor = .yellow
+        view.addSubview(outerTabBar)
+        outerTabBar.addSubview(tabBar)
     }
     
     private func addScollView() {
