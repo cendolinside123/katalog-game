@@ -9,6 +9,7 @@ import UIKit
 
 class DetailMovieViewController: UIViewController {
 
+    private let outerTabBar = UIView()
     private let tabBar = CustomTabBar()
     private let gameTitle = UILabel()
     private let gameImage = UIImageView()
@@ -145,20 +146,26 @@ class DetailMovieViewController: UIViewController {
     }
     
     private func addConstraint() {
-        let views = ["tabBar": tabBar, "scrollView": scrollView, "contentStackView": contentStackView, "gameTitle": gameTitle, "gameImage": gameImage, "gameDescription": gameDescription, "containerView": containerView, "ratingBox": ratingBox, "ratingStackView": ratingStackView, "exceptionalLabel": exceptionalLabel, "exceptionalCountLabel": exceptionalCountLabel, "exceptionalPercenBar": exceptionalPercenBar, "exceptionalPercenFill": exceptionalPercenFill, "recommendedStackView": recommendedStackView, "recommendedLabel": recommendedLabel, "recommendedCountLabel": recommendedCountLabel, "recommendedPercenBar": recommendedPercenBar, "recommendedPercenFill": recommendedPercenFill, "mehLabel": mehLabel, "mehCountLabel": mehCountLabel, "mehPercenBar": mehPercenBar, "mehPercenFill": mehPercenFill, "skipLabel": skipLabel, "skipCountLabel": skipCountLabel, "skipPercenBar": skipPercenBar, "skipPercenFill": skipPercenFill, "emptyView": emptyView]
+        let views = ["outerTabBar": outerTabBar, "tabBar": tabBar, "scrollView": scrollView, "contentStackView": contentStackView, "gameTitle": gameTitle, "gameImage": gameImage, "gameDescription": gameDescription, "containerView": containerView, "ratingBox": ratingBox, "ratingStackView": ratingStackView, "exceptionalLabel": exceptionalLabel, "exceptionalCountLabel": exceptionalCountLabel, "exceptionalPercenBar": exceptionalPercenBar, "exceptionalPercenFill": exceptionalPercenFill, "recommendedStackView": recommendedStackView, "recommendedLabel": recommendedLabel, "recommendedCountLabel": recommendedCountLabel, "recommendedPercenBar": recommendedPercenBar, "recommendedPercenFill": recommendedPercenFill, "mehLabel": mehLabel, "mehCountLabel": mehCountLabel, "mehPercenBar": mehPercenBar, "mehPercenFill": mehPercenFill, "skipLabel": skipLabel, "skipCountLabel": skipCountLabel, "skipPercenBar": skipPercenBar, "skipPercenFill": skipPercenFill, "emptyView": emptyView]
         let metrix: [String: Any] = [:]
         
         var constraints = [NSLayoutConstraint]()
         
-        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        outerTabBar.translatesAutoresizingMaskIntoConstraints = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         let hScrollView = "H:|-0-[scrollView]-0-|"
-        let hTabBar = "H:|-0-[tabBar]-0-|"
-        let vScrollView = "V:|-0-[tabBar]-0-[scrollView]-0-|"
+        let hTabBar = "H:|-0-[outerTabBar]-0-|"
+        let vScrollView = "V:|-0-[outerTabBar]-0-[scrollView]-0-|"
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hScrollView, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: hTabBar, options: .alignAllTop, metrics: metrix, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: vScrollView, options: .alignAllLeading, metrics: metrix, views: views)
-        constraints += [NSLayoutConstraint(item: tabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
+        constraints += [NSLayoutConstraint(item: outerTabBar, attribute: .height, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1/10, constant: 0)]
+        
+        tabBar.translatesAutoresizingMaskIntoConstraints = false
+        let hInnerTabBar = "H:|-0-[tabBar]-0-|"
+        let vInnerTabBar = "V:|-0-[tabBar]-0-|"
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: hInnerTabBar, options: .alignAllTop, metrics: metrix, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: vInnerTabBar, options: .alignAllLeft, metrics: metrix, views: views)
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
         let hContainerView = "H:|-0-[containerView]-0-|"
@@ -254,7 +261,9 @@ class DetailMovieViewController: UIViewController {
     }
     
     private func addTabBar() {
-        view.addSubview(tabBar)
+        outerTabBar.backgroundColor = .yellow
+        view.addSubview(outerTabBar)
+        outerTabBar.addSubview(tabBar)
     }
     
     private func addScrollView() {
